@@ -1,9 +1,9 @@
-# Reverse Engineering Legacy Reimbursement System - Phased Approach
+# Reverse Engineering Legacy Reimbursement System - Implementation Plan
 
 ## 📝 Knowledge Management Process
 
 ### Continuous Learning Documentation
-Throughout this reverse engineering process, we will maintain a living document `notes.md` to capture all insights, patterns, and learnings as they emerge.
+Throughout this reverse engineering process, we maintain a living document `notes.md` to capture all insights, patterns, and learnings as they emerge.
 
 **Structure of notes.md:**
 ```markdown
@@ -41,409 +41,308 @@ Throughout this reverse engineering process, we will maintain a living document 
 ```
 
 **When to Update notes.md:**
-- ✅ After each analysis phase completion
-- ✅ When discovering a new pattern
-- ✅ When confirming/refuting an interview claim
-- ✅ When encountering unexpected behavior
-- ✅ After model training results
-- ✅ When identifying high-error cases
-
-**Review Schedule:**
-- Before starting each new phase
-- When stuck on improving accuracy
-- Before final implementation
-- When writing documentation
-
-This ensures no insight is lost and patterns can be cross-referenced throughout the project.
+- ✅ After each eval.sh run with new patterns
+- ✅ When discovering error patterns
+- ✅ When confirming/refuting hypotheses
+- ✅ After implementing fixes
+- ✅ When achieving milestones
 
 ---
 
 ## Executive Summary
-Based on initial analysis of 1,000 public cases, we have sufficient data to attempt multiple regression approaches including neural networks. The system shows complex non-linear patterns with 430+ cases having >$50 error using gradient boosting, suggesting hidden rules or edge cases.
 
-**CRITICAL UPDATE**: We have discovered eval.sh provides immediate feedback on all 1,000 cases. This changes our approach from theoretical analysis to empirical iteration. We will implement, test, and refine rapidly using the evaluation feedback loop.
+We have discovered that `eval.sh` provides immediate feedback on all 1,000 test cases, showing exact matches, close matches, and specific high-error cases. This fundamentally changes our approach from theoretical analysis to **empirical implementation-driven discovery**.
 
-## New Strategy: Implementation-Driven Discovery
+**Key Learnings from Initial Analysis:**
+- Receipt amount is the dominant feature (highest mutual information: 0.565)
+- 4 distinct data clusters exist with different reimbursement patterns
+- Low receipt penalty confirmed (<$50 receipts = ~$822 less reimbursement)
+- Primary decision split occurs at receipts > $844
+- No 5-day bonus exists (contrary to interviews)
+- No temporal patterns - data is stationary
 
-### Why This Approach
-1. **eval.sh gives exact feedback** - We can see which cases fail and by how much
-2. **Rapid iteration beats analysis** - Instead of guessing patterns, we discover them empirically
-3. **Target is 100% exact matches** - Not just low error, but ±$0.01 precision
-4. **High-error cases reveal patterns** - The eval output shows us exactly what we're missing
+## Primary Strategy: Empirical Implementation-Driven Discovery
 
-### Implementation Plan
-1. **Baseline Implementation** (30 mins)
-   - Create initial model using our Phase 1.1 findings
-   - Implement in Python with our best current approach
-   - Get baseline score from eval.sh
+### Why This Approach Wins
+1. **eval.sh is our oracle** - Instant feedback on 1,000 cases with exact error amounts
+2. **Errors reveal patterns** - High-error cases show us exactly what rules we're missing
+3. **No guessing required** - Every hypothesis is immediately validated
+4. **Clear success metric** - 100% exact matches (±$0.01) is unambiguous
 
-2. **Error-Driven Refinement** (2-4 hours)
-   - Analyze high-error cases from eval.sh output
-   - Look for patterns in failures
-   - Add rules/adjustments for specific case types
-   - Re-run eval.sh to measure improvement
+### The Implementation Loop
 
-3. **Pattern Discovery Loop** (2-4 hours)
-   - Group failing cases by characteristics
-   - Test hypotheses on these groups
-   - Implement fixes and validate
-   - Continue until 100% exact matches
+```
+┌─────────────────┐
+│   Implement     │
+│  Best Model     │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│   Run eval.sh   │
+│ Get Error Cases │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│ Analyze Errors  │
+│  Find Patterns  │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  Update Model   │
+│   Add Rules     │
+└────────┬────────┘
+         │
+         └──────── Repeat until 100% ─┘
+```
 
-4. **Final Optimization** (1 hour)
-   - Clean up implementation
-   - Ensure consistent decimal handling
-   - Test edge cases
-   - Prepare for private cases
+## Phase 1: Baseline Implementation (30-60 mins)
 
-## Phase 1: Deep Data Analysis & Feature Engineering ✅ COMPLETE
+### Objective
+Create initial implementation using our analysis findings and get baseline metrics.
 
-### 1.1 Statistical Analysis - Detailed Plan
+### Implementation Details
+1. **Model Choice**: Decision tree or XGBoost (both showed promise)
+   - Decision trees naturally capture arbitrary rules/bugs
+   - Use our 4 identified clusters
+   - Implement known thresholds (receipts <$50, >$844)
 
-#### 1.1.1 Univariate Distribution Analysis
-**Objective**: Understand the individual behavior of each variable and identify anomalies
+2. **Feature Engineering** (from our analysis):
+   ```python
+   # Core features
+   miles_per_day = miles / days
+   receipts_per_day = receipts / days
+   cost_per_mile = receipts / miles
+   
+   # Categorical features for regime detection
+   trip_length_bucket = categorize_days(days)  # short/medium/long
+   receipt_bucket = categorize_receipts(receipts)  # low/medium/high
+   efficiency_bucket = categorize_efficiency(miles_per_day)
+   ```
 
-**Reimbursement Distribution**
-- Check for multimodality (multiple peaks suggesting different calculation modes)
-- Identify natural breakpoints/clusters in reimbursement amounts
-- Look for "magic numbers" - frequently occurring exact values
-- Analyze decimal patterns (.00, .49, .99 endings per interviews)
-- Outlier analysis: values beyond 3 standard deviations
-- Skewness and kurtosis to understand distribution shape
+3. **Initial Rules** (confirmed patterns):
+   ```python
+   # Low receipt penalty
+   if receipts < 50:
+       apply_penalty()  # ~40% reduction based on data
+   
+   # Primary split
+   if receipts > 844:
+       high_receipt_regime()
+   else:
+       low_receipt_regime()
+   ```
 
-**Input Variable Distributions**
-- Days: Check if certain durations are over/under-represented
-- Miles: Look for clustering around specific values (100, 200, 500 mile boundaries)
-- Receipts: Identify suspicious gaps or concentrations
-- Cross-reference with interview claims (e.g., "$847 is lucky")
+4. **Setup Scripts**:
+   - Create `calculate_reimbursement.py`
+   - Create `run.sh` from template
+   - Ensure proper decimal rounding (2 places)
 
-**Implementation**:
+### Success Criteria
+- Script runs successfully
+- Get baseline scores from eval.sh
+- Document initial performance in notes.md
+
+## Phase 2: Error-Driven Pattern Discovery (2-4 hours)
+
+### Objective
+Use eval.sh output to discover missing patterns empirically.
+
+### Process
+1. **Extract High-Error Cases**
+   ```bash
+   ./eval.sh > baseline_results.txt
+   # Focus on cases with error > $50
+   ```
+
+2. **Pattern Analysis**
+   - Group errors by input characteristics
+   - Look for systematic biases
+   - Check if errors correlate with:
+     - Specific day counts (especially edge values)
+     - Receipt thresholds we haven't discovered
+     - Mile boundaries
+     - Ratio relationships
+
+3. **Hypothesis Testing**
+   - For each pattern hypothesis:
+     - Implement the rule
+     - Run eval.sh
+     - Keep if improvement, revert if not
+     - Document in notes.md
+
+4. **Common Patterns to Check**:
+   - Boundary effects (day 1, day 14, etc.)
+   - Receipt rounding bugs (.49/.99 endings)
+   - Hidden thresholds
+   - Multiplicative effects
+   - Integer overflow/underflow artifacts
+
+### Tools for Analysis
 ```python
-# Detailed distribution analysis
-- Kernel Density Estimation (KDE) plots for smooth distribution visualization
-- Q-Q plots to check normality assumptions
-- Histogram with various bin sizes to catch patterns
-- Empirical Cumulative Distribution Function (ECDF) analysis
-- Statistical tests: Shapiro-Wilk, Anderson-Darling
+# After each eval.sh run:
+def analyze_errors(results_file):
+    # Load errors
+    # Group by characteristics
+    # Find commonalities
+    # Generate hypotheses
+    # Update notes.md
 ```
 
-#### 1.1.2 Temporal/Sequential Pattern Analysis
-**Objective**: Detect if case ordering reveals system behavior changes
+## Phase 3: Refinement & Edge Cases (2-3 hours)
 
-**Analyses**:
-- Rolling statistics (mean, std) with different window sizes (10, 50, 100 cases)
-- Autocorrelation analysis of reimbursements
-- Check for seasonal patterns if cases have implicit time ordering
-- Trend analysis: is the system becoming more/less generous over time?
-- Changepoint detection to identify system updates/modifications
-- Spectral analysis for periodic patterns
+### Objective
+Handle remaining errors through targeted fixes.
 
-**Implementation**:
-```python
-# Time series techniques despite no explicit timestamps
-- ARIMA modeling on case sequence
-- STL decomposition (Seasonal-Trend-Loess)
-- Fourier analysis for hidden periodicities
-- CUSUM charts for detecting shifts in behavior
-```
+### Strategies
+1. **Ensemble Approach** (if single model plateaus)
+   - Combine multiple models
+   - Use case-specific models for problem clusters
+   - Weight by confidence
 
-#### 1.1.3 Non-Linear Relationship Discovery
-**Objective**: Uncover complex relationships beyond linear correlation
+2. **Rule-Based Overrides**
+   - Hard-code specific problem cases if patterns unclear
+   - Add post-processing for systematic biases
+   - Implement "bug replication" for legacy quirks
 
-**Techniques**:
-- Mutual Information scores between variables
-- Distance correlation (captures non-linear dependencies)
-- Maximal Information Coefficient (MIC)
-- Scatter plot matrices with LOESS smoothing
-- 3D visualizations for three-way interactions
-- Partial dependence plots
+3. **Decimal Precision Handling**
+   - Ensure consistent rounding
+   - Check for floating-point artifacts
+   - Match legacy system's precision exactly
 
-**Specific Investigations**:
-- Polynomial relationships (receipts², miles³, etc.)
-- Logarithmic scaling (log(miles) vs reimbursement)
-- Threshold effects (sudden changes at specific values)
-- Interaction heatmaps (days×miles, miles×receipts)
-- Ratio analysis (reimbursement/receipts vs other variables)
+### Iteration Checklist
+- [ ] Run eval.sh after each change
+- [ ] Update notes.md with findings
+- [ ] Track improvement metrics
+- [ ] Save each working version
+- [ ] Document which changes helped
 
-#### 1.1.4 Segmentation & Regime Detection
-**Objective**: Identify if different "modes" or "regimes" exist
+## Phase 4: Final Optimization (1 hour)
 
-**Clustering Analysis**:
-- K-means with elbow method for optimal clusters
-- DBSCAN for density-based clustering
-- Gaussian Mixture Models for probabilistic clustering
-- Hierarchical clustering to understand relationships
-- Self-Organizing Maps (SOM) for visualization
+### Objective
+Achieve 100% exact matches and prepare for private cases.
 
-**Regime Detection**:
-- Hidden Markov Models to detect state changes
-- Decision tree splits to find natural breakpoints
-- Isolation Forest for anomaly detection
-- Local Outlier Factor (LOF) analysis
+### Tasks
+1. **Clean Implementation**
+   - Remove experimental code
+   - Optimize for speed (<5 seconds per case)
+   - Add error handling
 
-#### 1.1.5 Conditional Distribution Analysis
-**Objective**: Understand how distributions change based on conditions
+2. **Validation**
+   - Confirm 100% exact matches on public cases
+   - Test edge cases manually
+   - Verify decimal precision
 
-**Analyses**:
-- Reimbursement distribution conditioned on:
-  - Trip length buckets (1-3, 4-6, 7-10, 11+ days)
-  - Efficiency levels (<50, 50-100, 100-200, 200+ miles/day)
-  - Receipt categories (<$100, $100-500, $500-1000, $1000+)
-- Quantile regression to understand conditional relationships
-- Copula analysis for dependency structures
+3. **Prepare Submission**
+   - Run `generate_results.sh` for private cases
+   - Document final approach
+   - Create clean git history
 
-#### 1.1.6 Statistical Hypothesis Testing
-**Objective**: Rigorously test interview claims
+## Tracking Progress
 
-**Tests to Perform**:
-1. **5-day bonus**: 
-   - t-test comparing 5-day vs adjacent durations (4 and 6 days)
-   - Control for other variables using ANCOVA
-   - Propensity score matching to create comparable groups
+### Metrics to Track
+After each eval.sh run, record:
+- Exact matches (target: 1000/1000)
+- Close matches
+- Average error
+- Maximum error
+- Number of cases improved
+- Patterns discovered
 
-2. **Efficiency sweet spot (180-220 miles/day)**:
-   - ANOVA across efficiency buckets
-   - Tukey's HSD for pairwise comparisons
-   - Non-parametric alternatives (Kruskal-Wallis)
+### Expected Timeline
+- **Hour 1**: Baseline implementation + first eval.sh run
+- **Hour 2-3**: Major pattern discoveries
+- **Hour 4-5**: Edge case handling
+- **Hour 6**: Final optimization and validation
 
-3. **Receipt thresholds**:
-   - Breakpoint regression to find exact penalty points
-   - Piecewise linear regression
-   - Regression discontinuity design
+## Key Insights to Leverage
 
-4. **Rounding patterns (.49/.99)**:
-   - Chi-square test for digit frequency
-   - Benford's Law analysis
-   - Exact binomial tests
+From our completed Phase 1.1 analysis:
 
-#### 1.1.7 Outlier Characterization
-**Objective**: Understand extreme cases as they may reveal edge rules
+1. **Cluster-Based Approach**
+   - 4 distinct clusters identified
+   - Each may have different rules
+   - Use cluster membership as feature
 
-**Approach**:
-- Mahalanobis distance for multivariate outliers
-- Cook's distance from initial regression
-- SHAP values to explain individual predictions
-- Manual inspection of top/bottom 5% cases
-- Create "outlier profiles" with common characteristics
+2. **Receipt Dominance**
+   - Receipts are most predictive
+   - Multiple thresholds exist
+   - Non-linear relationships confirmed
 
-**Documentation**:
-- Maintain anomaly log with hypotheses
-- Cross-reference with interview claims
-- Look for systematic patterns in outliers
+3. **No Time Component**
+   - Case order doesn't matter
+   - No seasonal effects
+   - Can use all data equally
 
-#### 1.1.8 Missing Pattern Analysis
-**Objective**: What's NOT in the data might be informative
+4. **Failed Interview Claims**
+   - No 5-day bonus
+   - No 180-220 mpd efficiency bonus
+   - These save us from false paths
 
-**Investigations**:
-- Are certain combinations of inputs missing?
-- Gaps in reimbursement values (never see $X)
-- Impossible or avoided input combinations
-- Compare actual vs expected distributions
+## Contingency Plans
 
-### 1.2 Feature Engineering
-**Base Features:**
-- miles_per_day (efficiency metric)
-- receipts_per_day (spending rate)
-- total_cost_per_mile (receipts/miles ratio)
+### If Stuck at <95% Exact Matches
+1. Deep dive on systematic errors
+2. Try polynomial features
+3. Implement case-specific overrides
+4. Consider neural network
 
-**Categorical Features:**
-- trip_length_category (short: 1-3, medium: 4-7, long: 8+)
-- efficiency_category (based on miles/day buckets)
-- receipt_category (very_low, low, medium, medium_high, high, very_high)
+### If Stuck at 95-99% Exact Matches
+1. Manual inspection of all failures
+2. Look for data entry errors
+3. Check for modulo arithmetic
+4. Consider hardcoding edge cases
 
-**Interaction Features:**
-- days × miles (total trip effort)
-- days × receipts (total trip cost)
-- miles × receipts_per_mile
-- efficiency_score × trip_length
+### If Performance Issues
+1. Simplify model
+2. Pre-compute features
+3. Use lookup tables
+4. Optimize Python code
 
-**Polynomial Features:**
-- Consider up to degree 3 for key variables
-- Focus on receipts (most important per initial analysis)
+## Success Criteria
 
-### 1.3 Interview Hypothesis Testing
-Test each claim systematically:
-1. **Base per diem**: $100/day (Lisa) - appears valid
-2. **5-day bonus**: FALSE per initial analysis, but check subgroups
-3. **Mileage tiers**: Confirmed with clear breakpoints
-4. **Efficiency bonus**: 180-220 miles/day (Kevin) - needs refinement
-5. **Receipt penalties**: Low amounts (<$50) confirmed
-6. **"Magic combinations"**: Search for specific value patterns
-7. **Rounding bugs**: Check receipts ending in .49/.99
+### Minimum Viable Solution
+- ✅ Runs successfully
+- ✅ >90% exact matches
+- ✅ <$10 average error
 
-## Phase 2: Model Development Strategy (Days 3-4)
+### Target Solution
+- ✅ 100% exact matches on public cases
+- ✅ <5 second runtime
+- ✅ Clean, maintainable code
 
-### 2.1 Baseline Models
-1. **Rule-based system** incorporating confirmed patterns:
-   - Base per diem calculation
-   - Mileage tier system
-   - Receipt penalty/bonus rules
-   
-2. **Linear regression** with engineered features as sanity check
-
-### 2.2 Traditional ML Models
-1. **Random Forest** (current best: R²=0.936)
-   - Tune hyperparameters extensively
-   - Extract rule patterns from trees
-   
-2. **XGBoost/LightGBM**
-   - Often better than standard gradient boosting
-   - Good at capturing complex interactions
-
-3. **Support Vector Regression**
-   - With RBF kernel for non-linearity
-   - May capture different patterns
-
-### 2.3 Neural Network Approach
-**Architecture Proposal:**
-```
-Input Layer (3-30 features depending on engineering)
-Hidden Layer 1: 64 neurons, ReLU, Dropout(0.2)
-Hidden Layer 2: 32 neurons, ReLU, Dropout(0.2)
-Hidden Layer 3: 16 neurons, ReLU
-Output Layer: 1 neuron (reimbursement amount)
-```
-
-**Training Strategy:**
-- 70/15/15 train/validation/test split
-- K-fold cross-validation (k=5)
-- Early stopping with patience=20
-- L2 regularization
-- Batch normalization
-- Learning rate scheduling
-
-### 2.4 Ensemble Approach
-Combine predictions from:
-- Best tree-based model
-- Neural network
-- Rule-based system
-Using weighted average or stacking
-
-## Phase 3: Error Analysis & Edge Case Handling (Days 5-6)
-
-### 3.1 High-Error Case Analysis
-- Cluster high-error cases to find patterns
-- Manual inspection of top 50 worst predictions
-- Look for:
-  - Boundary conditions
-  - "Magic numbers" mentioned in interviews
-  - Possible data entry errors or system bugs
-
-### 3.2 Segmentation Strategy
-- Build separate models for different trip types if patterns emerge
-- Consider:
-  - Short vs. long trips
-  - High vs. low efficiency trips
-  - Business travel patterns (sales vs. others)
-
-### 3.3 Post-Processing Rules
-- Implement guardrails based on business logic
-- Handle edge cases identified in error analysis
-- Add "bug replication" for any systematic errors found
-
-## Phase 4: Implementation & Validation (Days 7-8)
-
-### 4.1 Model Selection
-- Compare all approaches on consistent holdout set
-- Consider both accuracy and interpretability
-- Ensemble if single model doesn't achieve >95% exact matches
-
-### 4.2 Implementation Options
-1. **Python-based** (recommended):
-   - Use trained model with pickle/joblib
-   - Fast inference, easy to maintain
-   
-2. **Pure calculation** (if patterns are simple enough):
-   - Implement discovered rules directly
-   - More transparent but less flexible
-
-3. **Hybrid approach**:
-   - Rules for common cases
-   - ML model for edge cases
-
-### 4.3 Validation Strategy
-- Test on full public dataset
-- Sensitivity analysis on input ranges
-- Stress test edge cases
-- Compare against employee anecdotes
-
-## Phase 5: Optimization & Refinement (Day 9)
-
-### 5.1 Fine-tuning
-- Optimize for exact matches (±$0.01) not just MAE
-- Custom loss function prioritizing exact matches
-- Threshold-based adjustments
-
-### 5.2 Final Testing
-- Run eval.sh iteratively
-- Target 100% exact matches on public cases
-- Document any irreconcilable cases
-
-## Risk Mitigation
-
-### Technical Risks
-1. **Overfitting**: Use strong regularization and cross-validation
-2. **Hidden variables**: The system might use data we don't have (date, user ID, etc.)
-3. **Non-deterministic behavior**: Some randomness might be intentional
-
-### Approach Risks
-1. **Over-engineering**: Start simple, add complexity only if needed
-2. **Missing patterns**: Regular error analysis to catch blind spots
-3. **Implementation mismatch**: Test early and often with eval.sh
-
-## Success Metrics
-- **Primary**: 100% exact matches (±$0.01) on public cases
-- **Secondary**: <$1 average error on any misses
-- **Stretch**: Discover and document all business rules
-
-## Recommended Approach
-Given the analysis showing R²=0.936 with tree methods and 430 high-error cases, I recommend:
-
-1. **Start with XGBoost** with extensive feature engineering
-2. **Parallel development** of neural network
-3. **Deep dive** on high-error cases for rule discovery
-4. **Ensemble** if needed for final accuracy push
-
-The 1,000 samples are sufficient for this approach with proper regularization and validation strategies.
+### Stretch Goals
+- Document all discovered rules
+- Explain the "bugs" in the system
+- Build interpretable model
+- Create visualization of decision logic
 
 ---
 
-## UPDATED PHASES (Post-Discovery of eval.sh)
+## Appendix: Completed Analysis Details
 
-### Active Phase: Implementation-Driven Discovery
-**Current Status**: Ready to begin
+<details>
+<summary>Phase 1.1: Deep Statistical Analysis (COMPLETED)</summary>
 
-#### Step 1: Baseline Implementation ⏳
-- Implement decision tree-based model from Phase 1.1 findings
-- Create `calculate_reimbursement.py` and `run.sh`
-- Run eval.sh for baseline metrics
-- Document initial performance
+### Key Findings
+- Reimbursement is NOT normally distributed (p < 0.001)
+- 4 distinct clusters via K-means
+- Decision tree primary split at receipts > $844
+- Low receipt penalty confirmed at $50 threshold
+- No temporal patterns detected
+- 16 statistical outliers identified
+- Only 40.2% coverage of possible input combinations
 
-#### Step 2: Error Pattern Analysis ⏳
-- Extract high-error cases from eval.sh
-- Group by characteristics (days, miles, receipts)
-- Identify systematic failures
-- Form hypotheses about missing rules
+### Statistical Tests Results
+- 5-day bonus: REJECTED (p=0.75)
+- Efficiency sweet spot: NOT CONFIRMED (p=0.47)
+- Receipt thresholds: CONFIRMED at multiple levels
+- Decimal patterns: Uniformly distributed (p=0.86)
 
-#### Step 3: Iterative Refinement ⏳
-- Implement fixes for identified patterns
-- Add special case handling
-- Re-run eval.sh after each change
-- Track improvement metrics
+</details>
 
-#### Step 4: Final Push to 100% ⏳
-- Focus on remaining errors
-- Try ensemble approaches if needed
-- Implement post-processing rules
-- Achieve 100% exact matches
+## Remember
 
-### Archived Phases (Superseded by eval.sh approach)
-- ~~Phase 2: Model Development Strategy~~ → Replaced by iterative implementation
-- ~~Phase 3: Error Analysis~~ → Now integrated into implementation loop
-- ~~Phase 4: Implementation & Validation~~ → Now the primary focus
-- ~~Phase 5: Optimization~~ → Continuous throughout iteration
-
-### Success Criteria
-- **Immediate Goal**: Get baseline score from eval.sh
-- **Primary Target**: 100% exact matches (±$0.01) on public cases
-- **Method**: Rapid iteration using eval.sh feedback
-- **Timeline**: 5-8 hours of focused iteration
+**The key to success is rapid iteration using eval.sh feedback. Don't overthink - implement, test, and refine!**
