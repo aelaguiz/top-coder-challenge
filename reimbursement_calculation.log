@@ -165,3 +165,105 @@ UnboundLocalError: cannot access local variable 'prediction' where it is not ass
 2025-06-07 17:03:24,703 - INFO - Prediction request: days=1, miles=32.0, receipts=21.24
 2025-06-07 17:03:24,703 - INFO - Using single day formula: $106.12 + $0.525*32.0 = $122.92
 2025-06-07 17:03:24,703 - INFO - Prediction complete: 122.92 (no expected value available)
+2025-06-07 17:03:25,686 - INFO - Prediction request: days=3, miles=187.0, receipts=15.92
+2025-06-07 17:03:25,687 - INFO - Using short trip formula: $112.02*3 + $0.857*187.0 - $40.10 = $456.22
+2025-06-07 17:03:25,687 - INFO - Prediction complete: 456.22 (no expected value available)
+2025-06-07 17:03:26,615 - INFO - Prediction request: days=1, miles=129.0, receipts=15.66
+2025-06-07 17:03:26,615 - INFO - Using single day formula: $106.12 + $0.525*129.0 = $173.85
+2025-06-07 17:03:26,615 - INFO - Prediction complete: 173.85 (no expected value available)
+2025-06-07 17:03:27,568 - INFO - Prediction request: days=3, miles=41.0, receipts=12.47
+2025-06-07 17:03:27,568 - INFO - Using short trip formula: $112.02*3 + $0.857*41.0 - $40.10 = $331.10
+2025-06-07 17:03:27,568 - INFO - Prediction complete: 331.10 (no expected value available)
+2025-06-07 17:03:28,554 - INFO - Prediction request: days=2, miles=102.0, receipts=15.32
+2025-06-07 17:03:28,554 - INFO - Using short trip formula: $112.02*2 + $0.857*102.0 - $40.10 = $271.35
+2025-06-07 17:03:28,554 - INFO - Prediction complete: 271.35 (no expected value available)
+2025-06-07 17:03:29,474 - INFO - Prediction request: days=3, miles=154.0, receipts=6.9
+2025-06-07 17:03:29,474 - INFO - Using short trip formula: $112.02*3 + $0.857*154.0 - $40.10 = $427.94
+2025-06-07 17:03:29,474 - INFO - Prediction complete: 427.94 (no expected value available)
+2025-06-07 17:03:30,410 - INFO - Prediction request: days=3, miles=79.0, receipts=17.07
+2025-06-07 17:03:30,410 - INFO - Using short trip formula: $112.02*3 + $0.857*79.0 - $40.10 = $363.66
+2025-06-07 17:03:30,410 - INFO - Prediction complete: 363.66 (no expected value available)
+2025-06-07 17:03:31,368 - INFO - Prediction request: days=1, miles=91.0, receipts=23.11
+2025-06-07 17:03:31,368 - INFO - Using single day formula: $106.12 + $0.525*91.0 = $153.90
+2025-06-07 17:03:31,368 - INFO - Prediction complete: 153.90 (no expected value available)
+2025-06-07 17:03:32,311 - INFO - Prediction request: days=3, miles=164.0, receipts=8.58
+2025-06-07 17:03:32,311 - INFO - Using short trip formula: $112.02*3 + $0.857*164.0 - $40.10 = $436.51
+2025-06-07 17:03:32,311 - INFO - Prediction complete: 436.51 (no expected value available)
+2025-06-07 17:03:33,266 - INFO - Prediction request: days=3, miles=80.0, receipts=10.14
+2025-06-07 17:03:33,266 - INFO - Using short trip formula: $112.02*3 + $0.857*80.0 - $40.10 = $364.52
+2025-06-07 17:03:33,266 - INFO - Prediction complete: 364.52 (no expected value available)
+2025-06-07 17:03:34,197 - INFO - Prediction request: days=2, miles=199.0, receipts=19.16
+2025-06-07 17:03:34,197 - INFO - Using short trip formula: $112.02*2 + $0.857*199.0 - $40.10 = $354.48
+2025-06-07 17:03:34,197 - INFO - Prediction complete: 354.48 (no expected value available)
+2025-06-07 17:03:35,131 - INFO - Prediction request: days=3, miles=185.0, receipts=6.81
+2025-06-07 17:03:35,131 - INFO - Using short trip formula: $112.02*3 + $0.857*185.0 - $40.10 = $454.50
+2025-06-07 17:03:35,131 - INFO - Prediction complete: 454.50 (no expected value available)
+2025-06-07 17:03:36,081 - INFO - Prediction request: days=2, miles=148.0, receipts=6.62
+2025-06-07 17:03:36,081 - INFO - Using short trip formula: $112.02*2 + $0.857*148.0 - $40.10 = $310.78
+2025-06-07 17:03:36,082 - INFO - Prediction complete: 310.78 (no expected value available)
+2025-06-07 17:03:37,045 - INFO - Prediction request: days=1, miles=28.0, receipts=12.2
+2025-06-07 17:03:37,045 - INFO - Using single day formula: $106.12 + $0.525*28.0 = $120.82
+2025-06-07 17:03:37,045 - INFO - Prediction complete: 120.82 (no expected value available)
+2025-06-07 17:03:37,974 - INFO - Prediction request: days=3, miles=158.0, receipts=22.15
+2025-06-07 17:03:37,974 - INFO - Using short trip formula: $112.02*3 + $0.857*158.0 - $40.10 = $431.37
+2025-06-07 17:03:37,974 - INFO - Prediction complete: 431.37 (no expected value available)
+2025-06-07 17:03:38,887 - INFO - Prediction request: days=1, miles=37.0, receipts=5.4
+2025-06-07 17:03:38,888 - INFO - Using single day formula: $106.12 + $0.525*37.0 = $125.55
+2025-06-07 17:03:38,888 - INFO - Prediction complete: 125.55 (no expected value available)
+2025-06-07 17:03:39,841 - INFO - Prediction request: days=2, miles=64.0, receipts=9.99
+2025-06-07 17:03:39,858 - INFO - *** APPLYING .49/.99 PENALTY ***
+2025-06-07 17:03:39,858 - INFO - Original prediction: $222.35
+2025-06-07 17:03:39,858 - INFO - With 45% penalty: $122.29
+2025-06-07 17:03:39,858 - INFO - Penalty amount: $100.06
+2025-06-07 17:03:39,858 - INFO - Prediction complete: 122.29 (no expected value available)
+2025-06-07 17:03:40,814 - INFO - Prediction request: days=2, miles=95.0, receipts=3.33
+2025-06-07 17:03:40,814 - INFO - Using short trip formula: $112.02*2 + $0.857*95.0 - $40.10 = $265.35
+2025-06-07 17:03:40,815 - INFO - Prediction complete: 265.35 (no expected value available)
+2025-06-07 17:03:41,726 - INFO - Prediction request: days=1, miles=115.0, receipts=23.11
+2025-06-07 17:03:41,727 - INFO - Using single day formula: $106.12 + $0.525*115.0 = $166.50
+2025-06-07 17:03:41,727 - INFO - Prediction complete: 166.50 (no expected value available)
+2025-06-07 17:03:42,658 - INFO - Prediction request: days=3, miles=168.0, receipts=14.87
+2025-06-07 17:03:42,658 - INFO - Using short trip formula: $112.02*3 + $0.857*168.0 - $40.10 = $439.94
+2025-06-07 17:03:42,658 - INFO - Prediction complete: 439.94 (no expected value available)
+2025-06-07 17:03:43,638 - INFO - Prediction request: days=3, miles=66.0, receipts=4.87
+2025-06-07 17:03:43,638 - INFO - Using short trip formula: $112.02*3 + $0.857*66.0 - $40.10 = $352.52
+2025-06-07 17:03:43,638 - INFO - Prediction complete: 352.52 (no expected value available)
+2025-06-07 17:03:44,637 - INFO - Prediction request: days=2, miles=119.0, receipts=16.17
+2025-06-07 17:03:44,637 - INFO - Using short trip formula: $112.02*2 + $0.857*119.0 - $40.10 = $285.92
+2025-06-07 17:03:44,637 - INFO - Prediction complete: 285.92 (no expected value available)
+2025-06-07 17:03:45,635 - INFO - Prediction request: days=3, miles=147.0, receipts=19.52
+2025-06-07 17:03:45,635 - INFO - Using short trip formula: $112.02*3 + $0.857*147.0 - $40.10 = $421.94
+2025-06-07 17:03:45,635 - INFO - Prediction complete: 421.94 (no expected value available)
+2025-06-07 17:03:46,540 - INFO - Prediction request: days=3, miles=186.0, receipts=19.58
+2025-06-07 17:03:46,540 - INFO - Using short trip formula: $112.02*3 + $0.857*186.0 - $40.10 = $455.36
+2025-06-07 17:03:46,540 - INFO - Prediction complete: 455.36 (no expected value available)
+2025-06-07 17:03:47,456 - INFO - Prediction request: days=3, miles=190.0, receipts=10.98
+2025-06-07 17:03:47,456 - INFO - Using short trip formula: $112.02*3 + $0.857*190.0 - $40.10 = $458.79
+2025-06-07 17:03:47,456 - INFO - Prediction complete: 458.79 (no expected value available)
+2025-06-07 17:03:48,445 - INFO - Prediction request: days=2, miles=105.0, receipts=10.56
+2025-06-07 17:03:48,445 - INFO - Using short trip formula: $112.02*2 + $0.857*105.0 - $40.10 = $273.92
+2025-06-07 17:03:48,445 - INFO - Prediction complete: 273.92 (no expected value available)
+2025-06-07 17:03:49,405 - INFO - Prediction request: days=3, miles=10.0, receipts=22.04
+2025-06-07 17:03:49,405 - INFO - Using short trip formula: $112.02*3 + $0.857*10.0 - $40.10 = $304.53
+2025-06-07 17:03:49,405 - INFO - Prediction complete: 304.53 (no expected value available)
+2025-06-07 17:03:50,364 - INFO - Prediction request: days=1, miles=49.0, receipts=2.59
+2025-06-07 17:03:50,364 - INFO - Using single day formula: $106.12 + $0.525*49.0 = $131.84
+2025-06-07 17:03:50,364 - INFO - Prediction complete: 131.84 (no expected value available)
+2025-06-07 17:03:51,322 - INFO - Prediction request: days=3, miles=205.0, receipts=13.12
+2025-06-07 17:03:51,322 - INFO - Using short trip formula: $112.02*3 + $0.857*205.0 - $40.10 = $471.64
+2025-06-07 17:03:51,322 - INFO - Prediction complete: 471.64 (no expected value available)
+2025-06-07 17:03:52,248 - INFO - Prediction request: days=2, miles=56.0, receipts=11.68
+2025-06-07 17:03:52,248 - INFO - Using short trip formula: $112.02*2 + $0.857*56.0 - $40.10 = $231.93
+2025-06-07 17:03:52,248 - INFO - Prediction complete: 231.93 (no expected value available)
+2025-06-07 17:03:53,205 - INFO - Prediction request: days=3, miles=110.0, receipts=19.42
+2025-06-07 17:03:53,205 - INFO - Using short trip formula: $112.02*3 + $0.857*110.0 - $40.10 = $390.23
+2025-06-07 17:03:53,205 - INFO - Prediction complete: 390.23 (no expected value available)
+2025-06-07 17:03:54,178 - INFO - Prediction request: days=1, miles=74.0, receipts=3.23
+2025-06-07 17:03:54,178 - INFO - Using single day formula: $106.12 + $0.525*74.0 = $144.97
+2025-06-07 17:03:54,178 - INFO - Prediction complete: 144.97 (no expected value available)
+2025-06-07 17:03:55,109 - INFO - Prediction request: days=2, miles=192.0, receipts=9.9
+2025-06-07 17:03:55,109 - INFO - Using short trip formula: $112.02*2 + $0.857*192.0 - $40.10 = $348.48
+2025-06-07 17:03:55,109 - INFO - Prediction complete: 348.48 (no expected value available)
+2025-06-07 17:03:56,062 - INFO - Prediction request: days=2, miles=174.0, receipts=9.43
+2025-06-07 17:03:56,062 - INFO - Using short trip formula: $112.02*2 + $0.857*174.0 - $40.10 = $333.06
+2025-06-07 17:03:56,062 - INFO - Prediction complete: 333.06 (no expected value available)
