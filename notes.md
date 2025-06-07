@@ -95,3 +95,30 @@
 3. 4 natural segments suggest mixture model approach
 4. Low receipt penalty at $50 must be explicitly modeled
 5. No temporal patterns - can use all data for training
+
+## Critical Discovery: eval.sh Changes Everything!
+
+### The Game Changer
+- **eval.sh provides immediate feedback** on all 1,000 test cases
+- Shows exact matches, close matches, and specific high-error cases
+- **This enables empirical discovery** instead of theoretical analysis
+- We can iterate rapidly: implement → test → analyze errors → fix → repeat
+
+### New Strategy: Implementation-Driven Discovery
+1. **Stop further analysis** - We have enough to start
+2. **Build initial implementation** using our best model (decision tree/XGBoost)
+3. **Run eval.sh** to get baseline performance and error cases
+4. **Iterate based on errors** - Let the failures guide us to missing patterns
+5. **Target 100% exact matches** - Not just low error, but ±$0.01 precision
+
+### Why This Is Better
+- **No more guessing** - eval.sh tells us exactly what's wrong
+- **Faster discovery** - High-error cases reveal patterns immediately
+- **Empirical validation** - Every hypothesis is tested instantly
+- **Clear success metric** - 100% exact matches is unambiguous
+
+### Next Immediate Steps
+1. Create `calculate_reimbursement.py` with current best model
+2. Create `run.sh` from template
+3. Run `eval.sh` and analyze the output
+4. Focus on the worst errors first - they likely reveal missing rules

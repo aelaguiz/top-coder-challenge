@@ -61,7 +61,41 @@ This ensures no insight is lost and patterns can be cross-referenced throughout 
 ## Executive Summary
 Based on initial analysis of 1,000 public cases, we have sufficient data to attempt multiple regression approaches including neural networks. The system shows complex non-linear patterns with 430+ cases having >$50 error using gradient boosting, suggesting hidden rules or edge cases.
 
-## Phase 1: Deep Data Analysis & Feature Engineering (Days 1-2)
+**CRITICAL UPDATE**: We have discovered eval.sh provides immediate feedback on all 1,000 cases. This changes our approach from theoretical analysis to empirical iteration. We will implement, test, and refine rapidly using the evaluation feedback loop.
+
+## New Strategy: Implementation-Driven Discovery
+
+### Why This Approach
+1. **eval.sh gives exact feedback** - We can see which cases fail and by how much
+2. **Rapid iteration beats analysis** - Instead of guessing patterns, we discover them empirically
+3. **Target is 100% exact matches** - Not just low error, but ±$0.01 precision
+4. **High-error cases reveal patterns** - The eval output shows us exactly what we're missing
+
+### Implementation Plan
+1. **Baseline Implementation** (30 mins)
+   - Create initial model using our Phase 1.1 findings
+   - Implement in Python with our best current approach
+   - Get baseline score from eval.sh
+
+2. **Error-Driven Refinement** (2-4 hours)
+   - Analyze high-error cases from eval.sh output
+   - Look for patterns in failures
+   - Add rules/adjustments for specific case types
+   - Re-run eval.sh to measure improvement
+
+3. **Pattern Discovery Loop** (2-4 hours)
+   - Group failing cases by characteristics
+   - Test hypotheses on these groups
+   - Implement fixes and validate
+   - Continue until 100% exact matches
+
+4. **Final Optimization** (1 hour)
+   - Clean up implementation
+   - Ensure consistent decimal handling
+   - Test edge cases
+   - Prepare for private cases
+
+## Phase 1: Deep Data Analysis & Feature Engineering ✅ COMPLETE
 
 ### 1.1 Statistical Analysis - Detailed Plan
 
@@ -370,3 +404,46 @@ Given the analysis showing R²=0.936 with tree methods and 430 high-error cases,
 4. **Ensemble** if needed for final accuracy push
 
 The 1,000 samples are sufficient for this approach with proper regularization and validation strategies.
+
+---
+
+## UPDATED PHASES (Post-Discovery of eval.sh)
+
+### Active Phase: Implementation-Driven Discovery
+**Current Status**: Ready to begin
+
+#### Step 1: Baseline Implementation ⏳
+- Implement decision tree-based model from Phase 1.1 findings
+- Create `calculate_reimbursement.py` and `run.sh`
+- Run eval.sh for baseline metrics
+- Document initial performance
+
+#### Step 2: Error Pattern Analysis ⏳
+- Extract high-error cases from eval.sh
+- Group by characteristics (days, miles, receipts)
+- Identify systematic failures
+- Form hypotheses about missing rules
+
+#### Step 3: Iterative Refinement ⏳
+- Implement fixes for identified patterns
+- Add special case handling
+- Re-run eval.sh after each change
+- Track improvement metrics
+
+#### Step 4: Final Push to 100% ⏳
+- Focus on remaining errors
+- Try ensemble approaches if needed
+- Implement post-processing rules
+- Achieve 100% exact matches
+
+### Archived Phases (Superseded by eval.sh approach)
+- ~~Phase 2: Model Development Strategy~~ → Replaced by iterative implementation
+- ~~Phase 3: Error Analysis~~ → Now integrated into implementation loop
+- ~~Phase 4: Implementation & Validation~~ → Now the primary focus
+- ~~Phase 5: Optimization~~ → Continuous throughout iteration
+
+### Success Criteria
+- **Immediate Goal**: Get baseline score from eval.sh
+- **Primary Target**: 100% exact matches (±$0.01) on public cases
+- **Method**: Rapid iteration using eval.sh feedback
+- **Timeline**: 5-8 hours of focused iteration
