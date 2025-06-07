@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """
-Baseline implementation for travel reimbursement calculation.
-Based on Phase 1.1 analysis findings.
+Version 4: Combined V3 + .49/.99 penalty implementation.
+Key changes:
+- Fixed miles to accept float values
+- Trip-length-aware formulas for low receipts (<$30)
+- 45% penalty for receipts ending in .49 or .99
+- Improved model parameters (500 estimators, deeper trees)
 """
 
 import sys
@@ -9,11 +13,9 @@ import json
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.tree import DecisionTreeRegressor
 import joblib
 import os
 import logging
-from datetime import datetime
 
 # Set up logging
 log_file = 'reimbursement_calculation.log'
@@ -22,23 +24,21 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
         logging.FileHandler(log_file)
-        # Removed stderr handler to keep eval.sh output clean
     ]
 )
-
-# Check if we need to train the model
-MODEL_FILE = 'reimbursement_model.pkl'
-FEATURES_FILE = 'feature_columns.json'
 
 # Load expected values for logging/debugging
 with open('public_cases.json', 'r') as f:
     PUBLIC_CASES = json.load(f)
     EXPECTED_OUTPUTS = {
         (case['input']['trip_duration_days'], 
-         case['input']['miles_traveled'], 
+         float(case['input']['miles_traveled']),  # Convert to float
          case['input']['total_receipts_amount']): case['expected_output']
         for case in PUBLIC_CASES
     }
+
+MODEL_FILE = 'reimbursement_model_v2.pkl'
+FEATURES_FILE = 'feature_columns_v2.json'
 
 def create_features(days, miles, receipts):
     """Create engineered features based on our analysis."""
@@ -62,23 +62,25 @@ def create_features(days, miles, receipts):
         'days_receipts': days * receipts,
         'miles_receipts': miles * receipts,
         
-        # Categorical indicators based on our cluster analysis
+        # Categorical indicators
         'is_short_trip': 1 if days <= 3 else 0,
         'is_medium_trip': 1 if 4 <= days <= 6 else 0,
         'is_long_trip': 1 if days >= 7 else 0,
         'is_very_long_trip': 1 if days >= 11 else 0,
         
-        # Receipt thresholds from analysis
-        'low_receipts': 1 if receipts < 50 else 0,
-        'high_receipts': 1 if receipts > 844 else 0,
-        'very_high_receipts': 1 if receipts > 1500 else 0,
+        # Updated receipt thresholds - low receipts are special!
+        'very_low_receipts': 1 if receipts < 30 else 0,
+        'low_receipts': 1 if receipts < 100 else 0,
+        'medium_receipts': 1 if 100 <= receipts < 500 else 0,
+        'high_receipts': 1 if receipts >= 500 else 0,
+        'very_high_receipts': 1 if receipts >= 1000 else 0,
         
         # Efficiency categories
         'low_efficiency': 1 if miles / days < 50 else 0,
-        'high_efficiency': 1 if 100 <= miles / days <= 200 else 0,
-        'very_high_efficiency': 1 if miles / days > 200 else 0,
+        'medium_efficiency': 1 if 50 <= miles / days < 150 else 0,
+        'high_efficiency': 1 if miles / days >= 150 else 0,
         
-        # Log transforms for non-linear relationships
+        # Log transforms
         'log_receipts': np.log1p(receipts),
         'log_miles': np.log1p(miles),
         'log_days': np.log1p(days),
@@ -86,16 +88,69 @@ def create_features(days, miles, receipts):
     
     return features
 
+def test_simple_formulas(days, miles, receipts):
+    """Test various simple formulas that might work for low receipt cases."""
+    formulas = {
+        'f1_100_per_day': 100 * days,
+        'f2_125_per_day': 125 * days,
+        'f3_100_day_0.5_mile': 100 * days + 0.5 * miles,
+        'f4_125_day_0.4_mile': 125 * days + 0.4 * miles,
+        'f5_100_day_0.75_mile': 100 * days + 0.75 * miles,
+        'f6_150_per_day': 150 * days,
+        'f7_miles_only': miles * 1.5,
+        'f8_complex': 80 * days + 0.8 * miles + 0.1 * receipts,
+    }
+    return formulas
+
 def train_model():
     """Train the model on public cases."""
-    logging.info("Starting model training...")
+    logging.info("Starting model training (V2)...")
     
     # Load training data
     with open('public_cases.json', 'r') as f:
         data = json.load(f)
     logging.info(f"Loaded {len(data)} training cases")
     
-    # Create feature matrix
+    # Separate low and high receipt cases for different treatment
+    low_receipt_data = []
+    high_receipt_data = []
+    
+    for case in data:
+        inp = case['input']
+        receipts = inp['total_receipts_amount']
+        if receipts < 30:
+            low_receipt_data.append(case)
+        else:
+            high_receipt_data.append(case)
+    
+    logging.info(f"Low receipt cases (<$30): {len(low_receipt_data)}")
+    logging.info(f"High receipt cases (>=$30): {len(high_receipt_data)}")
+    
+    # Analyze low receipt cases to find pattern
+    if low_receipt_data:
+        logging.info("\nAnalyzing low receipt cases for formula pattern...")
+        best_formula = None
+        best_error = float('inf')
+        
+        for case in low_receipt_data[:10]:  # Sample analysis
+            inp = case['input']
+            days = inp['trip_duration_days']
+            miles = float(inp['miles_traveled'])
+            receipts = inp['total_receipts_amount']
+            expected = case['expected_output']
+            
+            formulas = test_simple_formulas(days, miles, receipts)
+            
+            for name, result in formulas.items():
+                error = abs(result - expected)
+                if error < best_error:
+                    best_error = error
+                    best_formula = name
+            
+            logging.info(f"  d={days}, m={miles:.1f}, r=${receipts:.2f} => ${expected:.2f}")
+            logging.info(f"    Best formula: {best_formula} (error: ${best_error:.2f})")
+    
+    # Train regular model on all data for now
     features_list = []
     targets = []
     
@@ -106,7 +161,7 @@ def train_model():
         inp = case['input']
         features = create_features(
             inp['trip_duration_days'],
-            inp['miles_traveled'],
+            float(inp['miles_traveled']),  # Fixed: use float
             inp['total_receipts_amount']
         )
         features_list.append(features)
@@ -120,20 +175,20 @@ def train_model():
     
     logging.info(f"Created feature matrix with shape {X.shape}")
     
-    # Train model - using Gradient Boosting based on our analysis
+    # Train model
     model = GradientBoostingRegressor(
-        n_estimators=300,
-        learning_rate=0.05,
-        max_depth=6,
-        min_samples_split=10,
-        min_samples_leaf=5,
+        n_estimators=500,  # Increased
+        learning_rate=0.03,  # Decreased for better convergence
+        max_depth=8,  # Increased
+        min_samples_split=5,
+        min_samples_leaf=2,
         subsample=0.8,
         random_state=42,
-        loss='huber',  # Robust to outliers
+        loss='huber',
         alpha=0.9
     )
     
-    logging.info("Training Gradient Boosting model...")
+    logging.info("Training Gradient Boosting model (V2)...")
     model.fit(X, y)
     logging.info("Model training complete")
     
@@ -150,59 +205,92 @@ def train_model():
     return model, feature_cols
 
 def predict_reimbursement(days, miles, receipts):
-    """Predict reimbursement amount."""
-    # Load or train model
-    if os.path.exists(MODEL_FILE) and os.path.exists(FEATURES_FILE):
-        logging.debug(f"Loading existing model from {MODEL_FILE}")
-        model = joblib.load(MODEL_FILE)
-        with open(FEATURES_FILE, 'r') as f:
-            feature_cols = json.load(f)
-    else:
-        logging.info("No existing model found, training new model...")
-        model, feature_cols = train_model()
+    """Predict reimbursement amount with special handling for low receipts."""
     
-    # Create features
-    features = create_features(days, miles, receipts)
+    # Special handling for very low receipt cases (unless .49/.99)
+    receipt_cents = int(round((receipts % 1) * 100))
+    has_49_99_penalty = receipt_cents in [49, 99]
     
-    # Ensure features are in correct order
-    feature_vector = [features[col] for col in feature_cols]
+    prediction = None  # Initialize prediction
     
-    # Make prediction
-    prediction = model.predict([feature_vector])[0]
+    if receipts < 30 and not has_49_99_penalty:
+        # Use trip-length-specific formulas for low receipts
+        if days == 1:
+            # Single day: $106.12 + $0.525/mile (avg error $11.24)
+            prediction = 106.12 + 0.525 * miles
+            logging.info(f"Using single day formula: $106.12 + $0.525*{miles} = ${prediction:.2f}")
+        elif days <= 3:
+            # Short trip (2-3 days): $112.02/day + $0.857/mile - $40.10 (avg error $17.11)
+            prediction = 112.02 * days + 0.857 * miles - 40.10
+            logging.info(f"Using short trip formula: $112.02*{days} + $0.857*{miles} - $40.10 = ${prediction:.2f}")
+        elif days <= 6:
+            # Medium trip (4-6 days): $100/day + $0.50/mile (avg error $11.62)
+            prediction = 100 * days + 0.50 * miles
+            logging.info(f"Using medium trip formula: $100*{days} + $0.50*{miles} = ${prediction:.2f}")
+        else:
+            # Long trip (7+ days): Use ML model for these
+            prediction = None  # Will use ML model below
     
-    logging.debug(f"Raw prediction: {prediction:.2f} for inputs: days={days}, miles={miles}, receipts={receipts}")
-    
-    # Apply known business rules from analysis
-    # Low receipt penalty
-    if receipts < 50:
-        # Our analysis showed severe penalty for low receipts
-        old_prediction = prediction
-        prediction *= 0.6  # Approximate adjustment based on data
-        logging.debug(f"Applied low receipt penalty: {old_prediction:.2f} -> {prediction:.2f}")
+    # Use ML model if we haven't already made a prediction
+    if prediction is None or (receipts >= 30 or has_49_99_penalty):
+        # Use ML model for other cases
+        if os.path.exists(MODEL_FILE) and os.path.exists(FEATURES_FILE):
+            logging.debug(f"Loading existing model from {MODEL_FILE}")
+            model = joblib.load(MODEL_FILE)
+            with open(FEATURES_FILE, 'r') as f:
+                feature_cols = json.load(f)
+        else:
+            logging.info("No existing model found, training new model...")
+            model, feature_cols = train_model()
+        
+        # Create features
+        features = create_features(days, miles, receipts)
+        
+        # Ensure features are in correct order
+        feature_vector = [features[col] for col in feature_cols]
+        
+        # Make prediction
+        prediction = model.predict([feature_vector])[0]
+        
+        logging.debug(f"ML model prediction: {prediction:.2f} for inputs: days={days}, miles={miles}, receipts={receipts}")
     
     # Ensure non-negative
     prediction = max(0, prediction)
     
     # Round to 2 decimal places
-    final_result = round(prediction, 2)
-    logging.debug(f"Final result: {final_result}")
-    return final_result
+    return round(prediction, 2)
 
 if __name__ == '__main__':
     if len(sys.argv) != 4:
-        print("Usage: python calculate_reimbursement.py <days> <miles> <receipts>")
+        print("Usage: python calculate_reimbursement_v2.py <days> <miles> <receipts>")
         sys.exit(1)
     
     try:
         days = int(sys.argv[1])
-        miles = int(sys.argv[2])
+        miles = float(sys.argv[2])  # Fixed: use float instead of int
         receipts = float(sys.argv[3])
         
         # Look up expected value if available
         expected = EXPECTED_OUTPUTS.get((days, miles, receipts), None)
         
         logging.info(f"Prediction request: days={days}, miles={miles}, receipts={receipts}")
+        
+        # Check if receipts end in .49 or .99 (CRITICAL PENALTY)
+        receipt_cents = int(round((receipts % 1) * 100))
+        has_49_99_penalty = receipt_cents in [49, 99]
+        
         result = predict_reimbursement(days, miles, receipts)
+        
+        # Apply .49/.99 penalty if applicable
+        if has_49_99_penalty:
+            # Apply 45% penalty (optimal based on analysis)
+            original_prediction = result
+            result = result * (1 - 0.45)  # 45% reduction
+            logging.info(f"*** APPLYING .49/.99 PENALTY ***")
+            logging.info(f"Original prediction: ${original_prediction:.2f}")
+            logging.info(f"With 45% penalty: ${result:.2f}")
+            logging.info(f"Penalty amount: ${original_prediction - result:.2f}")
+        
         print(f"{result:.2f}")
         
         if expected is not None:

@@ -253,7 +253,23 @@ if __name__ == '__main__':
         expected = EXPECTED_OUTPUTS.get((days, miles, receipts), None)
         
         logging.info(f"Prediction request: days={days}, miles={miles}, receipts={receipts}")
+        
+        # Check if receipts end in .49 or .99 (CRITICAL PENALTY)
+        receipt_cents = int(round((receipts % 1) * 100))
+        has_49_99_penalty = receipt_cents in [49, 99]
+        
         result = predict_reimbursement(days, miles, receipts)
+        
+        # Apply .49/.99 penalty if applicable
+        if has_49_99_penalty:
+            # Apply 10% penalty (optimal based on analysis)
+            original_prediction = result
+            result = result * (1 - 0.10)  # 10% reduction
+            logging.info(f"*** APPLYING .49/.99 PENALTY ***")
+            logging.info(f"Original prediction: ${original_prediction:.2f}")
+            logging.info(f"With 10% penalty: ${result:.2f}")
+            logging.info(f"Penalty amount: ${original_prediction - result:.2f}")
+        
         print(f"{result:.2f}")
         
         if expected is not None:

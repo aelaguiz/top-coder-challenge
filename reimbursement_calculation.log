@@ -1,438 +1,167 @@
-2025-06-07 16:11:51,602 - INFO - Prediction request: days=3, miles=93, receipts=1.42
-2025-06-07 16:11:51,602 - INFO - No existing model found, training new model...
-2025-06-07 16:11:51,602 - INFO - Starting model training...
-2025-06-07 16:11:51,603 - INFO - Loaded 1000 training cases
-2025-06-07 16:11:51,603 - INFO - Processing training case 0/1000
-2025-06-07 16:11:51,603 - INFO - Processing training case 100/1000
-2025-06-07 16:11:51,604 - INFO - Processing training case 200/1000
-2025-06-07 16:11:51,604 - INFO - Processing training case 300/1000
-2025-06-07 16:11:51,604 - INFO - Processing training case 400/1000
-2025-06-07 16:11:51,604 - INFO - Processing training case 500/1000
-2025-06-07 16:11:51,605 - INFO - Processing training case 600/1000
-2025-06-07 16:11:51,605 - INFO - Processing training case 700/1000
-2025-06-07 16:11:51,605 - INFO - Processing training case 800/1000
-2025-06-07 16:11:51,606 - INFO - Processing training case 900/1000
-2025-06-07 16:11:51,608 - INFO - Created feature matrix with shape (1000, 25)
-2025-06-07 16:11:51,609 - INFO - Training Gradient Boosting model...
-2025-06-07 16:11:53,066 - INFO - Model training complete
-2025-06-07 16:11:53,072 - INFO - Training R² score: 0.9709
-2025-06-07 16:11:53,078 - INFO - Model saved to reimbursement_model.pkl
-2025-06-07 16:11:53,079 - INFO - ❌ Prediction: 221.44 | Expected: 364.51 | Error: $143.07
-2025-06-07 16:11:53,079 - WARNING - HIGH ERROR CASE: days=3, miles=93, receipts=1.42
-2025-06-07 16:11:53,079 - WARNING -   Predicted: $221.44, Expected: $364.51, Error: $143.07
-2025-06-07 16:12:14,769 - INFO - Prediction request: days=3, miles=93, receipts=1.42
-2025-06-07 16:12:14,776 - INFO - ❌ Prediction: 221.44 | Expected: 364.51 | Error: $143.07
-2025-06-07 16:12:14,776 - WARNING - HIGH ERROR CASE: days=3, miles=93, receipts=1.42
-2025-06-07 16:12:14,776 - WARNING -   Predicted: $221.44, Expected: $364.51, Error: $143.07
-2025-06-07 16:12:15,780 - INFO - Prediction request: days=1, miles=55, receipts=3.6
-2025-06-07 16:12:15,787 - INFO - ⚠️ Prediction: 80.23 | Expected: 126.06 | Error: $45.83
-2025-06-07 16:12:16,784 - INFO - Prediction request: days=1, miles=47, receipts=17.97
-2025-06-07 16:12:16,791 - INFO - ⚠️ Prediction: 80.66 | Expected: 128.91 | Error: $48.25
-2025-06-07 16:12:17,762 - INFO - Prediction request: days=2, miles=13, receipts=4.67
-2025-06-07 16:12:17,769 - INFO - ❌ Prediction: 125.44 | Expected: 203.52 | Error: $78.08
-2025-06-07 16:12:17,769 - WARNING - HIGH ERROR CASE: days=2, miles=13, receipts=4.67
-2025-06-07 16:12:17,769 - WARNING -   Predicted: $125.44, Expected: $203.52, Error: $78.08
-2025-06-07 16:12:18,862 - INFO - Prediction request: days=3, miles=88, receipts=5.78
-2025-06-07 16:12:18,869 - INFO - ❌ Prediction: 227.47 | Expected: 380.37 | Error: $152.90
-2025-06-07 16:12:18,869 - WARNING - HIGH ERROR CASE: days=3, miles=88, receipts=5.78
-2025-06-07 16:12:18,869 - WARNING -   Predicted: $227.47, Expected: $380.37, Error: $152.90
-2025-06-07 16:12:19,919 - INFO - Prediction request: days=1, miles=76, receipts=13.74
-2025-06-07 16:12:19,926 - INFO - ❌ Prediction: 94.55 | Expected: 158.35 | Error: $63.80
-2025-06-07 16:12:19,926 - WARNING - HIGH ERROR CASE: days=1, miles=76, receipts=13.74
-2025-06-07 16:12:19,926 - WARNING -   Predicted: $94.55, Expected: $158.35, Error: $63.80
-2025-06-07 16:12:20,876 - INFO - Prediction request: days=3, miles=41, receipts=4.52
-2025-06-07 16:12:20,882 - INFO - ❌ Prediction: 187.39 | Expected: 320.12 | Error: $132.73
-2025-06-07 16:12:20,882 - WARNING - HIGH ERROR CASE: days=3, miles=41, receipts=4.52
-2025-06-07 16:12:20,882 - WARNING -   Predicted: $187.39, Expected: $320.12, Error: $132.73
-2025-06-07 16:12:21,829 - INFO - Prediction request: days=1, miles=140, receipts=22.71
-2025-06-07 16:12:21,836 - INFO - ❌ Prediction: 115.57 | Expected: 199.68 | Error: $84.11
-2025-06-07 16:12:21,836 - WARNING - HIGH ERROR CASE: days=1, miles=140, receipts=22.71
-2025-06-07 16:12:21,836 - WARNING -   Predicted: $115.57, Expected: $199.68, Error: $84.11
-2025-06-07 16:12:22,814 - INFO - Prediction request: days=3, miles=121, receipts=21.17
-2025-06-07 16:12:22,821 - INFO - ❌ Prediction: 250.83 | Expected: 464.07 | Error: $213.24
-2025-06-07 16:12:22,821 - WARNING - HIGH ERROR CASE: days=3, miles=121, receipts=21.17
-2025-06-07 16:12:22,821 - WARNING -   Predicted: $250.83, Expected: $464.07, Error: $213.24
-2025-06-07 16:12:23,817 - INFO - Prediction request: days=3, miles=117, receipts=21.99
-2025-06-07 16:12:23,823 - INFO - ❌ Prediction: 222.42 | Expected: 359.10 | Error: $136.68
-2025-06-07 16:12:23,823 - WARNING - HIGH ERROR CASE: days=3, miles=117, receipts=21.99
-2025-06-07 16:12:23,823 - WARNING -   Predicted: $222.42, Expected: $359.10, Error: $136.68
-2025-06-07 16:12:24,754 - INFO - Prediction request: days=2, miles=202, receipts=21.24
-2025-06-07 16:12:24,761 - INFO - ❌ Prediction: 214.67 | Expected: 356.17 | Error: $141.50
-2025-06-07 16:12:24,761 - WARNING - HIGH ERROR CASE: days=2, miles=202, receipts=21.24
-2025-06-07 16:12:24,761 - WARNING -   Predicted: $214.67, Expected: $356.17, Error: $141.50
-2025-06-07 16:12:25,767 - INFO - Prediction request: days=3, miles=80, receipts=21.05
-2025-06-07 16:12:25,774 - INFO - ❌ Prediction: 220.91 | Expected: 366.87 | Error: $145.96
-2025-06-07 16:12:25,774 - WARNING - HIGH ERROR CASE: days=3, miles=80, receipts=21.05
-2025-06-07 16:12:25,774 - WARNING -   Predicted: $220.91, Expected: $366.87, Error: $145.96
-2025-06-07 16:12:26,720 - INFO - Prediction request: days=2, miles=21, receipts=20.04
-2025-06-07 16:12:26,726 - INFO - ❌ Prediction: 125.36 | Expected: 204.58 | Error: $79.22
-2025-06-07 16:12:26,726 - WARNING - HIGH ERROR CASE: days=2, miles=21, receipts=20.04
-2025-06-07 16:12:26,726 - WARNING -   Predicted: $125.36, Expected: $204.58, Error: $79.22
-2025-06-07 16:12:27,692 - INFO - Prediction request: days=3, miles=177, receipts=18.73
-2025-06-07 16:12:27,699 - INFO - ❌ Prediction: 249.59 | Expected: 430.86 | Error: $181.27
-2025-06-07 16:12:27,699 - WARNING - HIGH ERROR CASE: days=3, miles=177, receipts=18.73
-2025-06-07 16:12:27,699 - WARNING -   Predicted: $249.59, Expected: $430.86, Error: $181.27
-2025-06-07 16:12:28,653 - INFO - Prediction request: days=1, miles=141, receipts=10.15
-2025-06-07 16:12:28,660 - INFO - ❌ Prediction: 116.52 | Expected: 195.14 | Error: $78.62
-2025-06-07 16:12:28,660 - WARNING - HIGH ERROR CASE: days=1, miles=141, receipts=10.15
-2025-06-07 16:12:28,660 - WARNING -   Predicted: $116.52, Expected: $195.14, Error: $78.62
-2025-06-07 16:12:29,632 - INFO - Prediction request: days=1, miles=58, receipts=5.86
-2025-06-07 16:12:29,639 - INFO - ⚠️ Prediction: 75.78 | Expected: 117.24 | Error: $41.46
-2025-06-07 16:12:30,571 - INFO - Prediction request: days=1, miles=133, receipts=8.34
-2025-06-07 16:12:30,578 - INFO - ❌ Prediction: 109.70 | Expected: 179.06 | Error: $69.36
-2025-06-07 16:12:30,578 - WARNING - HIGH ERROR CASE: days=1, miles=133, receipts=8.34
-2025-06-07 16:12:30,578 - WARNING -   Predicted: $109.70, Expected: $179.06, Error: $69.36
-2025-06-07 16:12:31,525 - INFO - Prediction request: days=1, miles=59, receipts=8.31
-2025-06-07 16:12:31,531 - INFO - ⚠️ Prediction: 72.20 | Expected: 120.65 | Error: $48.45
-2025-06-07 16:12:32,502 - INFO - Prediction request: days=2, miles=89, receipts=13.85
-2025-06-07 16:12:32,508 - INFO - ❌ Prediction: 143.65 | Expected: 234.20 | Error: $90.55
-2025-06-07 16:12:32,508 - WARNING - HIGH ERROR CASE: days=2, miles=89, receipts=13.85
-2025-06-07 16:12:32,508 - WARNING -   Predicted: $143.65, Expected: $234.20, Error: $90.55
-2025-06-07 16:12:33,470 - INFO - Prediction request: days=2, miles=147, receipts=17.43
-2025-06-07 16:12:33,477 - INFO - ❌ Prediction: 199.77 | Expected: 325.56 | Error: $125.79
-2025-06-07 16:12:33,477 - WARNING - HIGH ERROR CASE: days=2, miles=147, receipts=17.43
-2025-06-07 16:12:33,477 - WARNING -   Predicted: $199.77, Expected: $325.56, Error: $125.79
-2025-06-07 16:12:34,447 - INFO - Prediction request: days=5, miles=130, receipts=306.9
-2025-06-07 16:12:34,454 - INFO - ✓ Prediction: 569.06 | Expected: 574.10 | Error: $5.04
-2025-06-07 16:12:35,434 - INFO - Prediction request: days=5, miles=173, receipts=1337.9
-2025-06-07 16:12:35,441 - INFO - ✓ Prediction: 1440.59 | Expected: 1443.96 | Error: $3.37
-2025-06-07 16:12:36,437 - INFO - Prediction request: days=5, miles=592, receipts=433.75
-2025-06-07 16:12:36,445 - INFO - ⚠️ Prediction: 883.43 | Expected: 869.00 | Error: $14.43
-2025-06-07 16:12:37,393 - INFO - Prediction request: days=5, miles=679, receipts=476.08
-2025-06-07 16:12:37,400 - INFO - ⚠️ Prediction: 1014.56 | Expected: 1030.41 | Error: $15.85
-2025-06-07 16:12:38,328 - INFO - Prediction request: days=5, miles=708, receipts=1129.52
-2025-06-07 16:12:38,335 - INFO - ⚠️ Prediction: 1634.90 | Expected: 1654.62 | Error: $19.72
-2025-06-07 16:12:39,240 - INFO - Prediction request: days=5, miles=261, receipts=464.94
-2025-06-07 16:12:39,246 - INFO - ⚠️ Prediction: 645.68 | Expected: 621.12 | Error: $24.56
-2025-06-07 16:12:40,209 - INFO - Prediction request: days=5, miles=794, receipts=511.0
-2025-06-07 16:12:40,216 - INFO - ❌ Prediction: 1078.65 | Expected: 1139.94 | Error: $61.29
-2025-06-07 16:12:40,216 - WARNING - HIGH ERROR CASE: days=5, miles=794, receipts=511.00
-2025-06-07 16:12:40,216 - WARNING -   Predicted: $1078.65, Expected: $1139.94, Error: $61.29
-2025-06-07 16:12:41,158 - INFO - Prediction request: days=5, miles=521, receipts=1448.55
-2025-06-07 16:12:41,164 - INFO - ✓ Prediction: 1624.74 | Expected: 1624.01 | Error: $0.73
-2025-06-07 16:12:42,100 - INFO - Prediction request: days=5, miles=595, receipts=863.93
-2025-06-07 16:12:42,107 - INFO - ⚠️ Prediction: 1248.79 | Expected: 1231.67 | Error: $17.12
-2025-06-07 16:12:43,097 - INFO - Prediction request: days=5, miles=811, receipts=952.39
-2025-06-07 16:12:43,103 - INFO - ✓ Prediction: 1603.01 | Expected: 1608.60 | Error: $5.59
-2025-06-07 16:12:44,051 - INFO - Prediction request: days=5, miles=477, receipts=704.42
-2025-06-07 16:12:44,058 - INFO - ⚠️ Prediction: 1033.64 | Expected: 1045.96 | Error: $12.32
-2025-06-07 16:12:45,006 - INFO - Prediction request: days=5, miles=730, receipts=485.73
-2025-06-07 16:12:45,013 - INFO - ✓ Prediction: 997.75 | Expected: 991.49 | Error: $6.26
-2025-06-07 16:12:46,003 - INFO - Prediction request: days=5, miles=262, receipts=1173.79
-2025-06-07 16:12:46,010 - INFO - ⚠️ Prediction: 1467.77 | Expected: 1485.59 | Error: $17.82
-2025-06-07 16:12:46,988 - INFO - Prediction request: days=5, miles=446, receipts=219.98
-2025-06-07 16:12:46,995 - INFO - ✓ Prediction: 787.55 | Expected: 788.62 | Error: $1.07
-2025-06-07 16:12:47,945 - INFO - Prediction request: days=5, miles=751, receipts=407.43
-2025-06-07 16:12:47,952 - INFO - ❌ Prediction: 971.25 | Expected: 1063.46 | Error: $92.21
-2025-06-07 16:12:47,952 - WARNING - HIGH ERROR CASE: days=5, miles=751, receipts=407.43
-2025-06-07 16:12:47,952 - WARNING -   Predicted: $971.25, Expected: $1063.46, Error: $92.21
-2025-06-07 16:12:48,937 - INFO - Prediction request: days=5, miles=324, receipts=128.94
-2025-06-07 16:12:48,944 - INFO - ⚠️ Prediction: 704.68 | Expected: 686.54 | Error: $18.14
-2025-06-07 16:12:49,913 - INFO - Prediction request: days=5, miles=414, receipts=967.0
-2025-06-07 16:12:49,920 - INFO - ⚠️ Prediction: 1340.68 | Expected: 1368.94 | Error: $28.26
-2025-06-07 16:12:50,892 - INFO - Prediction request: days=5, miles=367, receipts=290.78
-2025-06-07 16:12:50,899 - INFO - ⚠️ Prediction: 761.01 | Expected: 742.25 | Error: $18.76
-2025-06-07 16:12:51,914 - INFO - Prediction request: days=5, miles=764, receipts=848.75
-2025-06-07 16:12:51,921 - INFO - ⚠️ Prediction: 1450.03 | Expected: 1468.46 | Error: $18.43
-2025-06-07 16:12:52,896 - INFO - Prediction request: days=5, miles=249, receipts=873.75
-2025-06-07 16:12:52,903 - INFO - ✓ Prediction: 1187.45 | Expected: 1185.24 | Error: $2.21
-2025-06-07 16:12:53,860 - INFO - Prediction request: days=8, miles=862, receipts=1817.85
-2025-06-07 16:12:53,866 - INFO - ❌ Prediction: 1778.17 | Expected: 1719.37 | Error: $58.80
-2025-06-07 16:12:53,866 - WARNING - HIGH ERROR CASE: days=8, miles=862, receipts=1817.85
-2025-06-07 16:12:53,866 - WARNING -   Predicted: $1778.17, Expected: $1719.37, Error: $58.80
-2025-06-07 16:12:54,844 - INFO - Prediction request: days=11, miles=927, receipts=1994.33
-2025-06-07 16:12:54,851 - INFO - ⚠️ Prediction: 1803.04 | Expected: 1779.12 | Error: $23.92
-2025-06-07 16:12:55,823 - INFO - Prediction request: days=9, miles=602, receipts=186.69
-2025-06-07 16:12:55,830 - INFO - ⚠️ Prediction: 1066.61 | Expected: 1085.40 | Error: $18.79
-2025-06-07 16:12:56,765 - INFO - Prediction request: days=8, miles=610, receipts=208.29
-2025-06-07 16:12:56,771 - INFO - ✓ Prediction: 850.19 | Expected: 841.27 | Error: $8.92
-2025-06-07 16:12:57,780 - INFO - Prediction request: days=12, miles=333, receipts=1103.21
-2025-06-07 16:12:57,787 - INFO - ⚠️ Prediction: 1634.02 | Expected: 1618.13 | Error: $15.89
-2025-06-07 16:12:58,741 - INFO - Prediction request: days=8, miles=435, receipts=1129.65
-2025-06-07 16:12:58,748 - INFO - ✓ Prediction: 1517.11 | Expected: 1525.26 | Error: $8.15
-2025-06-07 16:12:59,718 - INFO - Prediction request: days=9, miles=218, receipts=1203.45
-2025-06-07 16:12:59,725 - INFO - ⚠️ Prediction: 1547.76 | Expected: 1561.63 | Error: $13.87
-2025-06-07 16:13:00,668 - INFO - Prediction request: days=12, miles=781, receipts=1159.18
-2025-06-07 16:13:00,675 - INFO - ✓ Prediction: 1762.64 | Expected: 1752.72 | Error: $9.92
-2025-06-07 16:13:01,616 - INFO - Prediction request: days=11, miles=916, receipts=1036.91
-2025-06-07 16:13:01,623 - INFO - ⚠️ Prediction: 2069.91 | Expected: 2098.07 | Error: $28.16
-2025-06-07 16:13:02,592 - INFO - Prediction request: days=10, miles=358, receipts=2066.62
-2025-06-07 16:13:02,599 - INFO - ⚠️ Prediction: 1609.95 | Expected: 1624.11 | Error: $14.16
-2025-06-07 16:13:03,571 - INFO - Prediction request: days=12, miles=566, receipts=2013.7
-2025-06-07 16:13:03,577 - INFO - ✓ Prediction: 1747.55 | Expected: 1752.03 | Error: $4.48
-2025-06-07 16:13:04,559 - INFO - Prediction request: days=9, miles=954, receipts=1483.39
-2025-06-07 16:13:04,565 - INFO - ⚠️ Prediction: 1979.41 | Expected: 2024.20 | Error: $44.79
-2025-06-07 16:13:05,537 - INFO - Prediction request: days=9, miles=534, receipts=1929.94
-2025-06-07 16:13:05,544 - INFO - ✓ Prediction: 1618.51 | Expected: 1624.87 | Error: $6.36
-2025-06-07 16:13:06,505 - INFO - Prediction request: days=12, miles=765, receipts=1343.97
-2025-06-07 16:13:06,512 - INFO - ✓ Prediction: 1943.78 | Expected: 1953.03 | Error: $9.25
-2025-06-07 16:13:07,480 - INFO - Prediction request: days=8, miles=630, receipts=967.69
-2025-06-07 16:13:07,487 - INFO - ⚠️ Prediction: 1418.51 | Expected: 1388.05 | Error: $30.46
-2025-06-07 16:13:08,422 - INFO - Prediction request: days=10, miles=909, receipts=696.0
-2025-06-07 16:13:08,429 - INFO - ✓ Prediction: 1512.90 | Expected: 1505.19 | Error: $7.71
-2025-06-07 16:13:09,402 - INFO - Prediction request: days=10, miles=223, receipts=745.89
-2025-06-07 16:13:09,409 - INFO - ⚠️ Prediction: 1049.12 | Expected: 1037.45 | Error: $11.67
-2025-06-07 16:13:10,369 - INFO - Prediction request: days=8, miles=467, receipts=1178.71
-2025-06-07 16:13:10,376 - INFO - ✓ Prediction: 1489.57 | Expected: 1483.33 | Error: $6.24
-2025-06-07 16:13:11,384 - INFO - Prediction request: days=9, miles=708, receipts=461.07
-2025-06-07 16:13:11,391 - INFO - ✓ Prediction: 1111.75 | Expected: 1110.60 | Error: $1.15
-2025-06-07 16:13:12,359 - INFO - Prediction request: days=9, miles=885, receipts=1764.97
-2025-06-07 16:13:12,366 - INFO - ⚠️ Prediction: 1735.30 | Expected: 1694.37 | Error: $40.93
-2025-06-07 16:13:13,310 - INFO - Prediction request: days=6, miles=855, receipts=591.35
-2025-06-07 16:13:13,316 - INFO - ✓ Prediction: 1334.65 | Expected: 1339.72 | Error: $5.07
-2025-06-07 16:13:14,252 - INFO - Prediction request: days=2, miles=993, receipts=54.24
-2025-06-07 16:13:14,259 - INFO - ✓ Prediction: 708.56 | Expected: 715.19 | Error: $6.63
-2025-06-07 16:13:15,196 - INFO - Prediction request: days=5, miles=685, receipts=747.14
-2025-06-07 16:13:15,202 - INFO - ⚠️ Prediction: 1227.92 | Expected: 1216.36 | Error: $11.56
-2025-06-07 16:13:16,162 - INFO - Prediction request: days=3, miles=981, receipts=341.45
-2025-06-07 16:13:16,169 - INFO - ⚠️ Prediction: 791.92 | Expected: 813.95 | Error: $22.03
-2025-06-07 16:13:17,168 - INFO - Prediction request: days=5, miles=770, receipts=873.33
-2025-06-07 16:13:17,174 - INFO - ✓ Prediction: 1504.42 | Expected: 1502.49 | Error: $1.93
-2025-06-07 16:13:18,131 - INFO - Prediction request: days=6, miles=697, receipts=651.64
-2025-06-07 16:13:18,137 - INFO - ⚠️ Prediction: 1227.47 | Expected: 1237.71 | Error: $10.24
-2025-06-07 16:13:19,089 - INFO - Prediction request: days=3, miles=795, receipts=450.85
-2025-06-07 16:13:19,096 - INFO - ✓ Prediction: 748.52 | Expected: 743.94 | Error: $4.58
-2025-06-07 16:13:20,057 - INFO - Prediction request: days=3, miles=606, receipts=1184.23
-2025-06-07 16:13:20,063 - INFO - ⚠️ Prediction: 1380.63 | Expected: 1364.54 | Error: $16.09
-2025-06-07 16:13:21,010 - INFO - Prediction request: days=3, miles=842, receipts=865.37
-2025-06-07 16:13:21,017 - INFO - ⚠️ Prediction: 1239.87 | Expected: 1251.14 | Error: $11.27
-2025-06-07 16:13:21,986 - INFO - Prediction request: days=7, miles=748, receipts=241.73
-2025-06-07 16:13:21,992 - INFO - ⚠️ Prediction: 995.48 | Expected: 971.31 | Error: $24.17
-2025-06-07 16:13:22,968 - INFO - Prediction request: days=7, miles=624, receipts=148.16
-2025-06-07 16:13:22,975 - INFO - ✓ Prediction: 902.54 | Expected: 905.79 | Error: $3.25
-2025-06-07 16:13:24,067 - INFO - Prediction request: days=2, miles=713, receipts=740.33
-2025-06-07 16:13:24,074 - INFO - ⚠️ Prediction: 1020.50 | Expected: 1048.28 | Error: $27.78
-2025-06-07 16:13:25,164 - INFO - Prediction request: days=3, miles=874, receipts=1191.4
-2025-06-07 16:13:25,171 - INFO - ✓ Prediction: 1506.26 | Expected: 1515.99 | Error: $9.73
-2025-06-07 16:13:26,224 - INFO - Prediction request: days=6, miles=761, receipts=530.19
-2025-06-07 16:13:26,230 - INFO - ✓ Prediction: 1120.62 | Expected: 1120.10 | Error: $0.52
-2025-06-07 16:13:27,239 - INFO - Prediction request: days=1, miles=815, receipts=97.89
-2025-06-07 16:13:27,246 - INFO - ✓ Prediction: 545.09 | Expected: 539.36 | Error: $5.73
-2025-06-07 16:13:28,275 - INFO - Prediction request: days=1, miles=601, receipts=497.7
-2025-06-07 16:13:28,282 - INFO - ✓ Prediction: 641.68 | Expected: 644.12 | Error: $2.44
-2025-06-07 16:13:29,372 - INFO - Prediction request: days=7, miles=817, receipts=1127.87
-2025-06-07 16:13:29,379 - INFO - ✓ Prediction: 1812.19 | Expected: 1809.91 | Error: $2.28
-2025-06-07 16:13:30,485 - INFO - Prediction request: days=1, miles=606, receipts=923.0
-2025-06-07 16:13:30,491 - INFO - ✓ Prediction: 1053.46 | Expected: 1050.05 | Error: $3.41
-2025-06-07 16:13:31,553 - INFO - Prediction request: days=1, miles=909, receipts=741.82
-2025-06-07 16:13:31,560 - INFO - ✓ Prediction: 871.33 | Expected: 866.07 | Error: $5.26
-2025-06-07 16:13:32,554 - INFO - Prediction request: days=3, miles=624, receipts=1160.92
-2025-06-07 16:13:32,561 - INFO - ⚠️ Prediction: 1440.81 | Expected: 1459.34 | Error: $18.53
-2025-06-07 16:13:33,582 - INFO - Prediction request: days=4, miles=650, receipts=619.49
-2025-06-07 16:13:33,589 - INFO - ❌ Prediction: 888.09 | Expected: 676.38 | Error: $211.71
-2025-06-07 16:13:33,590 - WARNING - HIGH ERROR CASE: days=4, miles=650, receipts=619.49
-2025-06-07 16:13:33,590 - WARNING -   Predicted: $888.09, Expected: $676.38, Error: $211.71
-2025-06-07 16:13:34,607 - INFO - Prediction request: days=6, miles=204, receipts=818.99
-2025-06-07 16:13:34,614 - INFO - ❌ Prediction: 844.05 | Expected: 628.40 | Error: $215.65
-2025-06-07 16:13:34,614 - WARNING - HIGH ERROR CASE: days=6, miles=204, receipts=818.99
-2025-06-07 16:13:34,614 - WARNING -   Predicted: $844.05, Expected: $628.40, Error: $215.65
-2025-06-07 16:13:35,691 - INFO - Prediction request: days=1, miles=263, receipts=396.49
-2025-06-07 16:13:35,699 - INFO - ⚠️ Prediction: 246.20 | Expected: 198.42 | Error: $47.78
-2025-06-07 16:13:36,734 - INFO - Prediction request: days=1, miles=451, receipts=555.49
-2025-06-07 16:13:36,740 - INFO - ❌ Prediction: 356.02 | Expected: 162.18 | Error: $193.84
-2025-06-07 16:13:36,740 - WARNING - HIGH ERROR CASE: days=1, miles=451, receipts=555.49
-2025-06-07 16:13:36,740 - WARNING -   Predicted: $356.02, Expected: $162.18, Error: $193.84
-2025-06-07 16:13:37,678 - INFO - Prediction request: days=10, miles=424, receipts=474.99
-2025-06-07 16:13:37,684 - INFO - ⚠️ Prediction: 847.22 | Expected: 831.96 | Error: $15.26
-2025-06-07 16:13:38,652 - INFO - Prediction request: days=2, miles=565, receipts=389.49
-2025-06-07 16:13:38,659 - INFO - ❌ Prediction: 503.73 | Expected: 415.96 | Error: $87.77
-2025-06-07 16:13:38,659 - WARNING - HIGH ERROR CASE: days=2, miles=565, receipts=389.49
-2025-06-07 16:13:38,659 - WARNING -   Predicted: $503.73, Expected: $415.96, Error: $87.77
-2025-06-07 16:13:39,636 - INFO - Prediction request: days=9, miles=397, receipts=348.49
-2025-06-07 16:13:39,643 - INFO - ⚠️ Prediction: 901.83 | Expected: 913.29 | Error: $11.46
-2025-06-07 16:13:40,623 - INFO - Prediction request: days=1, miles=532, receipts=413.99
-2025-06-07 16:13:40,630 - INFO - ✓ Prediction: 360.20 | Expected: 355.57 | Error: $4.63
-2025-06-07 16:13:41,590 - INFO - Prediction request: days=2, miles=384, receipts=495.49
-2025-06-07 16:13:41,597 - INFO - ❌ Prediction: 416.33 | Expected: 290.36 | Error: $125.97
-2025-06-07 16:13:41,597 - WARNING - HIGH ERROR CASE: days=2, miles=384, receipts=495.49
-2025-06-07 16:13:41,597 - WARNING -   Predicted: $416.33, Expected: $290.36, Error: $125.97
-2025-06-07 16:13:42,558 - INFO - Prediction request: days=5, miles=754, receipts=489.99
-2025-06-07 16:13:42,565 - INFO - ❌ Prediction: 986.35 | Expected: 765.13 | Error: $221.22
-2025-06-07 16:13:42,565 - WARNING - HIGH ERROR CASE: days=5, miles=754, receipts=489.99
-2025-06-07 16:13:42,565 - WARNING -   Predicted: $986.35, Expected: $765.13, Error: $221.22
-2025-06-07 16:13:43,517 - ERROR - Error during prediction: invalid literal for int() with base 10: '344.46'
+2025-06-07 17:01:30,827 - INFO - Prediction request: days=3, miles=117.0, receipts=21.99
+2025-06-07 17:01:30,827 - ERROR - Error during prediction: cannot access local variable 'prediction' where it is not associated with a value
 Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '344.46'
-2025-06-07 16:13:44,483 - ERROR - Error during prediction: invalid literal for int() with base 10: '344.46'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '344.46'
-2025-06-07 16:13:45,451 - ERROR - Error during prediction: invalid literal for int() with base 10: '906.3'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '906.3'
-2025-06-07 16:13:46,408 - ERROR - Error during prediction: invalid literal for int() with base 10: '906.3'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '906.3'
-2025-06-07 16:13:47,361 - ERROR - Error during prediction: invalid literal for int() with base 10: '1007.56'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '1007.56'
-2025-06-07 16:13:48,301 - ERROR - Error during prediction: invalid literal for int() with base 10: '1007.56'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '1007.56'
-2025-06-07 16:13:49,231 - ERROR - Error during prediction: invalid literal for int() with base 10: '359.62'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '359.62'
-2025-06-07 16:13:50,150 - ERROR - Error during prediction: invalid literal for int() with base 10: '359.62'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '359.62'
-2025-06-07 16:13:51,075 - ERROR - Error during prediction: invalid literal for int() with base 10: '362.79'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '362.79'
-2025-06-07 16:13:52,055 - ERROR - Error during prediction: invalid literal for int() with base 10: '362.79'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '362.79'
-2025-06-07 16:13:52,982 - ERROR - Error during prediction: invalid literal for int() with base 10: '288.72'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '288.72'
-2025-06-07 16:13:53,909 - ERROR - Error during prediction: invalid literal for int() with base 10: '288.72'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '288.72'
-2025-06-07 16:13:54,880 - ERROR - Error during prediction: invalid literal for int() with base 10: '782.17'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '782.17'
-2025-06-07 16:13:55,941 - ERROR - Error during prediction: invalid literal for int() with base 10: '782.17'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '782.17'
-2025-06-07 16:13:56,948 - ERROR - Error during prediction: invalid literal for int() with base 10: '623.18'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '623.18'
-2025-06-07 16:13:57,888 - ERROR - Error during prediction: invalid literal for int() with base 10: '623.18'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '623.18'
-2025-06-07 16:13:58,830 - ERROR - Error during prediction: invalid literal for int() with base 10: '1061.15'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '1061.15'
-2025-06-07 16:13:59,777 - ERROR - Error during prediction: invalid literal for int() with base 10: '1061.15'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '1061.15'
-2025-06-07 16:14:00,712 - ERROR - Error during prediction: invalid literal for int() with base 10: '252.75'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '252.75'
-2025-06-07 16:14:01,669 - ERROR - Error during prediction: invalid literal for int() with base 10: '252.75'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '252.75'
-2025-06-07 16:14:02,624 - ERROR - Error during prediction: invalid literal for int() with base 10: '1020.39'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '1020.39'
-2025-06-07 16:14:03,625 - ERROR - Error during prediction: invalid literal for int() with base 10: '1020.39'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '1020.39'
-2025-06-07 16:14:04,668 - ERROR - Error during prediction: invalid literal for int() with base 10: '257.97'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '257.97'
-2025-06-07 16:14:05,691 - ERROR - Error during prediction: invalid literal for int() with base 10: '257.97'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '257.97'
-2025-06-07 16:14:06,623 - ERROR - Error during prediction: invalid literal for int() with base 10: '1025.03'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '1025.03'
-2025-06-07 16:14:07,579 - ERROR - Error during prediction: invalid literal for int() with base 10: '1025.03'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '1025.03'
-2025-06-07 16:14:08,513 - ERROR - Error during prediction: invalid literal for int() with base 10: '794.32'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '794.32'
-2025-06-07 16:14:09,460 - ERROR - Error during prediction: invalid literal for int() with base 10: '794.32'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '794.32'
-2025-06-07 16:14:10,419 - ERROR - Error during prediction: invalid literal for int() with base 10: '276.85'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '276.85'
-2025-06-07 16:14:11,401 - ERROR - Error during prediction: invalid literal for int() with base 10: '276.85'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '276.85'
-2025-06-07 16:14:12,356 - ERROR - Error during prediction: invalid literal for int() with base 10: '851.68'
-Traceback (most recent call last):
-  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 198, in <module>
-    miles = int(sys.argv[2])
-            ^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: '851.68'
+  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 280, in <module>
+    result = predict_reimbursement(days, miles, receipts)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aelaguiz/workspace/top-coder-challenge/calculate_reimbursement.py", line 233, in predict_reimbursement
+    if prediction is None or (receipts >= 30 or has_49_99_penalty):
+       ^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'prediction' where it is not associated with a value
+2025-06-07 17:01:51,133 - INFO - Prediction request: days=3, miles=117.0, receipts=21.99
+2025-06-07 17:01:51,148 - INFO - *** APPLYING .49/.99 PENALTY ***
+2025-06-07 17:01:51,148 - INFO - Original prediction: $360.40
+2025-06-07 17:01:51,148 - INFO - With 45% penalty: $198.22
+2025-06-07 17:01:51,148 - INFO - Penalty amount: $162.18
+2025-06-07 17:01:51,148 - INFO - ❌ Prediction: 198.22 | Expected: 359.10 | Error: $160.88
+2025-06-07 17:01:51,148 - WARNING - HIGH ERROR CASE: days=3, miles=117.0, receipts=21.99
+2025-06-07 17:01:51,148 - WARNING -   Predicted: $198.22, Expected: $359.10, Error: $160.88
+2025-06-07 17:02:00,922 - INFO - Prediction request: days=8, miles=482.0, receipts=1411.49
+2025-06-07 17:02:00,938 - INFO - *** APPLYING .49/.99 PENALTY ***
+2025-06-07 17:02:00,938 - INFO - Original prediction: $889.90
+2025-06-07 17:02:00,938 - INFO - With 45% penalty: $489.45
+2025-06-07 17:02:00,938 - INFO - Penalty amount: $400.45
+2025-06-07 17:02:00,938 - INFO - ❌ Prediction: 489.45 | Expected: 631.81 | Error: $142.36
+2025-06-07 17:02:00,938 - WARNING - HIGH ERROR CASE: days=8, miles=482.0, receipts=1411.49
+2025-06-07 17:02:00,938 - WARNING -   Predicted: $489.45, Expected: $631.81, Error: $142.36
+2025-06-07 17:02:42,515 - INFO - Prediction request: days=3, miles=191.0, receipts=21.87
+2025-06-07 17:02:42,515 - INFO - Using short trip formula: $112.02*3 + $0.857*191.0 - $40.10 = $459.65
+2025-06-07 17:02:42,515 - INFO - Prediction complete: 459.65 (no expected value available)
+2025-06-07 17:02:43,450 - INFO - Prediction request: days=1, miles=81.0, receipts=3.93
+2025-06-07 17:02:43,450 - INFO - Using single day formula: $106.12 + $0.525*81.0 = $148.65
+2025-06-07 17:02:43,450 - INFO - Prediction complete: 148.65 (no expected value available)
+2025-06-07 17:02:44,411 - INFO - Prediction request: days=3, miles=204.0, receipts=16.76
+2025-06-07 17:02:44,411 - INFO - Using short trip formula: $112.02*3 + $0.857*204.0 - $40.10 = $470.79
+2025-06-07 17:02:44,411 - INFO - Prediction complete: 470.79 (no expected value available)
+2025-06-07 17:02:45,344 - INFO - Prediction request: days=1, miles=64.0, receipts=22.47
+2025-06-07 17:02:45,344 - INFO - Using single day formula: $106.12 + $0.525*64.0 = $139.72
+2025-06-07 17:02:45,344 - INFO - Prediction complete: 139.72 (no expected value available)
+2025-06-07 17:02:46,257 - INFO - Prediction request: days=3, miles=204.0, receipts=22.19
+2025-06-07 17:02:46,257 - INFO - Using short trip formula: $112.02*3 + $0.857*204.0 - $40.10 = $470.79
+2025-06-07 17:02:46,258 - INFO - Prediction complete: 470.79 (no expected value available)
+2025-06-07 17:02:47,158 - INFO - Prediction request: days=1, miles=51.0, receipts=17.84
+2025-06-07 17:02:47,158 - INFO - Using single day formula: $106.12 + $0.525*51.0 = $132.90
+2025-06-07 17:02:47,158 - INFO - Prediction complete: 132.90 (no expected value available)
+2025-06-07 17:02:48,059 - INFO - Prediction request: days=3, miles=207.0, receipts=18.16
+2025-06-07 17:02:48,059 - INFO - Using short trip formula: $112.02*3 + $0.857*207.0 - $40.10 = $473.36
+2025-06-07 17:02:48,059 - INFO - Prediction complete: 473.36 (no expected value available)
+2025-06-07 17:02:48,952 - INFO - Prediction request: days=1, miles=182.0, receipts=11.75
+2025-06-07 17:02:48,952 - INFO - Using single day formula: $106.12 + $0.525*182.0 = $201.67
+2025-06-07 17:02:48,952 - INFO - Prediction complete: 201.67 (no expected value available)
+2025-06-07 17:02:49,879 - INFO - Prediction request: days=1, miles=164.0, receipts=9.59
+2025-06-07 17:02:49,879 - INFO - Using single day formula: $106.12 + $0.525*164.0 = $192.22
+2025-06-07 17:02:49,879 - INFO - Prediction complete: 192.22 (no expected value available)
+2025-06-07 17:02:50,771 - INFO - Prediction request: days=2, miles=109.0, receipts=14.74
+2025-06-07 17:02:50,771 - INFO - Using short trip formula: $112.02*2 + $0.857*109.0 - $40.10 = $277.35
+2025-06-07 17:02:50,771 - INFO - Prediction complete: 277.35 (no expected value available)
+2025-06-07 17:02:51,683 - INFO - Prediction request: days=1, miles=110.0, receipts=9.81
+2025-06-07 17:02:51,683 - INFO - Using single day formula: $106.12 + $0.525*110.0 = $163.87
+2025-06-07 17:02:51,683 - INFO - Prediction complete: 163.87 (no expected value available)
+2025-06-07 17:02:52,588 - INFO - Prediction request: days=1, miles=50.0, receipts=0.27
+2025-06-07 17:02:52,588 - INFO - Using single day formula: $106.12 + $0.525*50.0 = $132.37
+2025-06-07 17:02:52,588 - INFO - Prediction complete: 132.37 (no expected value available)
+2025-06-07 17:02:53,516 - INFO - Prediction request: days=2, miles=41.0, receipts=2.06
+2025-06-07 17:02:53,516 - INFO - Using short trip formula: $112.02*2 + $0.857*41.0 - $40.10 = $219.08
+2025-06-07 17:02:53,516 - INFO - Prediction complete: 219.08 (no expected value available)
+2025-06-07 17:02:54,401 - INFO - Prediction request: days=3, miles=143.0, receipts=24.16
+2025-06-07 17:02:54,401 - INFO - Using short trip formula: $112.02*3 + $0.857*143.0 - $40.10 = $418.51
+2025-06-07 17:02:54,401 - INFO - Prediction complete: 418.51 (no expected value available)
+2025-06-07 17:02:55,324 - INFO - Prediction request: days=2, miles=53.0, receipts=2.24
+2025-06-07 17:02:55,325 - INFO - Using short trip formula: $112.02*2 + $0.857*53.0 - $40.10 = $229.36
+2025-06-07 17:02:55,325 - INFO - Prediction complete: 229.36 (no expected value available)
+2025-06-07 17:02:56,259 - INFO - Prediction request: days=3, miles=205.0, receipts=1.96
+2025-06-07 17:02:56,259 - INFO - Using short trip formula: $112.02*3 + $0.857*205.0 - $40.10 = $471.64
+2025-06-07 17:02:56,259 - INFO - Prediction complete: 471.64 (no expected value available)
+2025-06-07 17:02:57,268 - INFO - Prediction request: days=3, miles=163.0, receipts=15.86
+2025-06-07 17:02:57,268 - INFO - Using short trip formula: $112.02*3 + $0.857*163.0 - $40.10 = $435.65
+2025-06-07 17:02:57,268 - INFO - Prediction complete: 435.65 (no expected value available)
+2025-06-07 17:02:58,229 - INFO - Prediction request: days=3, miles=38.0, receipts=1.85
+2025-06-07 17:02:58,229 - INFO - Using short trip formula: $112.02*3 + $0.857*38.0 - $40.10 = $328.53
+2025-06-07 17:02:58,229 - INFO - Prediction complete: 328.53 (no expected value available)
+2025-06-07 17:02:59,222 - INFO - Prediction request: days=3, miles=182.0, receipts=2.42
+2025-06-07 17:02:59,222 - INFO - Using short trip formula: $112.02*3 + $0.857*182.0 - $40.10 = $451.93
+2025-06-07 17:02:59,222 - INFO - Prediction complete: 451.93 (no expected value available)
+2025-06-07 17:03:00,179 - INFO - Prediction request: days=3, miles=144.0, receipts=9.52
+2025-06-07 17:03:00,179 - INFO - Using short trip formula: $112.02*3 + $0.857*144.0 - $40.10 = $419.37
+2025-06-07 17:03:00,179 - INFO - Prediction complete: 419.37 (no expected value available)
+2025-06-07 17:03:01,114 - INFO - Prediction request: days=2, miles=192.0, receipts=13.65
+2025-06-07 17:03:01,114 - INFO - Using short trip formula: $112.02*2 + $0.857*192.0 - $40.10 = $348.48
+2025-06-07 17:03:01,114 - INFO - Prediction complete: 348.48 (no expected value available)
+2025-06-07 17:03:02,100 - INFO - Prediction request: days=1, miles=29.0, receipts=17.29
+2025-06-07 17:03:02,100 - INFO - Using single day formula: $106.12 + $0.525*29.0 = $121.34
+2025-06-07 17:03:02,100 - INFO - Prediction complete: 121.34 (no expected value available)
+2025-06-07 17:03:03,077 - INFO - Prediction request: days=1, miles=167.0, receipts=1.14
+2025-06-07 17:03:03,077 - INFO - Using single day formula: $106.12 + $0.525*167.0 = $193.80
+2025-06-07 17:03:03,077 - INFO - Prediction complete: 193.80 (no expected value available)
+2025-06-07 17:03:04,000 - INFO - Prediction request: days=2, miles=30.0, receipts=6.32
+2025-06-07 17:03:04,001 - INFO - Using short trip formula: $112.02*2 + $0.857*30.0 - $40.10 = $209.65
+2025-06-07 17:03:04,001 - INFO - Prediction complete: 209.65 (no expected value available)
+2025-06-07 17:03:04,937 - INFO - Prediction request: days=3, miles=160.0, receipts=24.82
+2025-06-07 17:03:04,937 - INFO - Using short trip formula: $112.02*3 + $0.857*160.0 - $40.10 = $433.08
+2025-06-07 17:03:04,937 - INFO - Prediction complete: 433.08 (no expected value available)
+2025-06-07 17:03:05,860 - INFO - Prediction request: days=1, miles=167.0, receipts=22.49
+2025-06-07 17:03:05,876 - INFO - *** APPLYING .49/.99 PENALTY ***
+2025-06-07 17:03:05,876 - INFO - Original prediction: $217.24
+2025-06-07 17:03:05,876 - INFO - With 45% penalty: $119.48
+2025-06-07 17:03:05,876 - INFO - Penalty amount: $97.76
+2025-06-07 17:03:05,876 - INFO - Prediction complete: 119.48 (no expected value available)
+2025-06-07 17:03:06,814 - INFO - Prediction request: days=1, miles=194.0, receipts=1.44
+2025-06-07 17:03:06,814 - INFO - Using single day formula: $106.12 + $0.525*194.0 = $207.97
+2025-06-07 17:03:06,814 - INFO - Prediction complete: 207.97 (no expected value available)
+2025-06-07 17:03:07,751 - INFO - Prediction request: days=2, miles=70.0, receipts=2.48
+2025-06-07 17:03:07,751 - INFO - Using short trip formula: $112.02*2 + $0.857*70.0 - $40.10 = $243.93
+2025-06-07 17:03:07,751 - INFO - Prediction complete: 243.93 (no expected value available)
+2025-06-07 17:03:08,677 - INFO - Prediction request: days=1, miles=143.0, receipts=4.06
+2025-06-07 17:03:08,677 - INFO - Using single day formula: $106.12 + $0.525*143.0 = $181.19
+2025-06-07 17:03:08,677 - INFO - Prediction complete: 181.19 (no expected value available)
+2025-06-07 17:03:09,636 - INFO - Prediction request: days=3, miles=168.0, receipts=0.83
+2025-06-07 17:03:09,636 - INFO - Using short trip formula: $112.02*3 + $0.857*168.0 - $40.10 = $439.94
+2025-06-07 17:03:09,636 - INFO - Prediction complete: 439.94 (no expected value available)
+2025-06-07 17:03:10,611 - INFO - Prediction request: days=2, miles=141.0, receipts=9.16
+2025-06-07 17:03:10,611 - INFO - Using short trip formula: $112.02*2 + $0.857*141.0 - $40.10 = $304.78
+2025-06-07 17:03:10,611 - INFO - Prediction complete: 304.78 (no expected value available)
+2025-06-07 17:03:11,519 - INFO - Prediction request: days=2, miles=165.0, receipts=9.62
+2025-06-07 17:03:11,519 - INFO - Using short trip formula: $112.02*2 + $0.857*165.0 - $40.10 = $325.34
+2025-06-07 17:03:11,519 - INFO - Prediction complete: 325.34 (no expected value available)
+2025-06-07 17:03:12,413 - INFO - Prediction request: days=2, miles=162.0, receipts=5.18
+2025-06-07 17:03:12,413 - INFO - Using short trip formula: $112.02*2 + $0.857*162.0 - $40.10 = $322.77
+2025-06-07 17:03:12,413 - INFO - Prediction complete: 322.77 (no expected value available)
+2025-06-07 17:03:13,355 - INFO - Prediction request: days=1, miles=147.0, receipts=7.96
+2025-06-07 17:03:13,355 - INFO - Using single day formula: $106.12 + $0.525*147.0 = $183.30
+2025-06-07 17:03:13,355 - INFO - Prediction complete: 183.30 (no expected value available)
+2025-06-07 17:03:14,301 - INFO - Prediction request: days=2, miles=45.0, receipts=13.79
+2025-06-07 17:03:14,301 - INFO - Using short trip formula: $112.02*2 + $0.857*45.0 - $40.10 = $222.51
+2025-06-07 17:03:14,301 - INFO - Prediction complete: 222.51 (no expected value available)
+2025-06-07 17:03:15,244 - INFO - Prediction request: days=2, miles=53.0, receipts=17.66
+2025-06-07 17:03:15,244 - INFO - Using short trip formula: $112.02*2 + $0.857*53.0 - $40.10 = $229.36
+2025-06-07 17:03:15,244 - INFO - Prediction complete: 229.36 (no expected value available)
+2025-06-07 17:03:16,199 - INFO - Prediction request: days=2, miles=179.0, receipts=19.26
+2025-06-07 17:03:16,199 - INFO - Using short trip formula: $112.02*2 + $0.857*179.0 - $40.10 = $337.34
+2025-06-07 17:03:16,199 - INFO - Prediction complete: 337.34 (no expected value available)
+2025-06-07 17:03:17,123 - INFO - Prediction request: days=1, miles=41.0, receipts=17.06
+2025-06-07 17:03:17,123 - INFO - Using single day formula: $106.12 + $0.525*41.0 = $127.65
+2025-06-07 17:03:17,123 - INFO - Prediction complete: 127.65 (no expected value available)
+2025-06-07 17:03:18,080 - INFO - Prediction request: days=3, miles=133.0, receipts=14.89
+2025-06-07 17:03:18,080 - INFO - Using short trip formula: $112.02*3 + $0.857*133.0 - $40.10 = $409.94
+2025-06-07 17:03:18,080 - INFO - Prediction complete: 409.94 (no expected value available)
+2025-06-07 17:03:19,039 - INFO - Prediction request: days=2, miles=164.0, receipts=22.83
+2025-06-07 17:03:19,039 - INFO - Using short trip formula: $112.02*2 + $0.857*164.0 - $40.10 = $324.49
+2025-06-07 17:03:19,039 - INFO - Prediction complete: 324.49 (no expected value available)
+2025-06-07 17:03:19,964 - INFO - Prediction request: days=1, miles=34.0, receipts=19.68
+2025-06-07 17:03:19,964 - INFO - Using single day formula: $106.12 + $0.525*34.0 = $123.97
+2025-06-07 17:03:19,964 - INFO - Prediction complete: 123.97 (no expected value available)
+2025-06-07 17:03:20,903 - INFO - Prediction request: days=1, miles=158.0, receipts=23.46
+2025-06-07 17:03:20,903 - INFO - Using single day formula: $106.12 + $0.525*158.0 = $189.07
+2025-06-07 17:03:20,903 - INFO - Prediction complete: 189.07 (no expected value available)
+2025-06-07 17:03:21,834 - INFO - Prediction request: days=2, miles=50.0, receipts=24.81
+2025-06-07 17:03:21,835 - INFO - Using short trip formula: $112.02*2 + $0.857*50.0 - $40.10 = $226.79
+2025-06-07 17:03:21,835 - INFO - Prediction complete: 226.79 (no expected value available)
+2025-06-07 17:03:22,757 - INFO - Prediction request: days=3, miles=45.0, receipts=8.01
+2025-06-07 17:03:22,757 - INFO - Using short trip formula: $112.02*3 + $0.857*45.0 - $40.10 = $334.52
+2025-06-07 17:03:22,757 - INFO - Prediction complete: 334.52 (no expected value available)
+2025-06-07 17:03:23,737 - INFO - Prediction request: days=1, miles=32.0, receipts=2.19
+2025-06-07 17:03:23,738 - INFO - Using single day formula: $106.12 + $0.525*32.0 = $122.92
+2025-06-07 17:03:23,738 - INFO - Prediction complete: 122.92 (no expected value available)
+2025-06-07 17:03:24,703 - INFO - Prediction request: days=1, miles=32.0, receipts=21.24
+2025-06-07 17:03:24,703 - INFO - Using single day formula: $106.12 + $0.525*32.0 = $122.92
+2025-06-07 17:03:24,703 - INFO - Prediction complete: 122.92 (no expected value available)

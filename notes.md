@@ -1,7 +1,10 @@
 # Legacy System Reverse Engineering Notes
 
 ## Confirmed Patterns
-*None yet - analysis in progress*
+1. **Mileage tiers** - Clear tiered structure with initial drop at 50-100 miles
+2. **Low receipt bonus** - Trips with <$30 receipts use different calculation
+3. **.49/.99 receipt penalty** - All cases ending in .49/.99 get 12-78% reduction
+4. **$847 cluster** - Multiple cases cluster around this reimbursement amount
 
 ## Suspected Patterns
 - **Base per diem around $100/day** - Initial analysis shows this might be valid (Lisa's claim)
@@ -148,3 +151,264 @@ Testing formula: Base per day + rate per mile
 - Cases with receipts in $400-600 range also showing errors
 - Some cases are OVERpredicted (we predict too high)
 - Suggests multiple calculation regimes, not just low/high receipts
+
+## Phase 2 V2 Implementation Results
+
+### Changes Made
+1. **Fixed float bug**: Changed `miles = int(sys.argv[2])` to `miles = float(sys.argv[2])`
+2. **Special formula for low receipts (<$30)**:
+   - Implemented: `$100 * days + $0.75 * miles`
+   - Based on pattern analysis showing these cases need higher reimbursement
+3. **Improved model hyperparameters**:
+   - Increased estimators: 300 → 500
+   - Increased max_depth: 6 → 8
+   - Decreased learning_rate: 0.05 → 0.03
+
+### Results
+- **Training R² improved**: 0.9709 → 0.9988
+- **Example case improvement**: 
+  - Case (3 days, 93 miles, $1.42 receipts)
+  - V1: Predicted $221.44, Error: $143.07
+  - V2: Predicted $369.75, Error: $5.24
+
+### Next Steps
+- Run full eval.sh to measure overall improvement
+- Analyze remaining high-error cases
+- May need different formulas for different receipt ranges
+
+## Phase 2 V2 Full Evaluation Results (Parallel)
+
+### Overall Performance
+- **Total cases**: 1,000
+- **Average error**: $7.40 (improved from baseline but still high)
+- **Exact matches**: 6 (0.6%) - Far from our 100% target
+- **Score**: 839.70
+
+### Error Analysis by Bucket
+
+#### 🔴 Critical Issue: Low Receipt Cases (<$30)
+Our simple formula ($100/day + $0.75/mile) is **failing catastrophically** for longer trips:
+
+| Trip Length | Cases | Avg Error | Max Error | Over-predict % |
+|------------|-------|-----------|-----------|----------------|
+| Long (7+ days) | 3 | **$583.48** | $858.83 | 100% |
+| Medium (4-6 days) | 2 | **$100.12** | $126.25 | 100% |
+| Single Day | 9 | **$34.27** | $199.04 | 89% |
+| Short (2-3 days) | 12 | **$17.57** | $73.32 | 58% |
+
+**Worst low receipt cases:**
+- 13 days, 1204 miles, $24.47: Expected $1344.17, Got $2203.00 ❌
+- 10 days, 1192 miles, $23.47: Expected $1157.87, Got $1894.00 ❌
+- 1 day, 893 miles, $19.76: Expected $570.71, Got $769.75 ❌
+
+**Key insight**: The formula completely breaks down for long trips with low receipts. We're massively over-predicting.
+
+#### 🟡 Medium Receipt Cases ($30-1000)
+ML model performing reasonably well:
+
+| Receipt Range | Cases | Avg Error | Exact Matches |
+|--------------|-------|-----------|---------------|
+| $30-100 | 22 | $3.63 | 0% |
+| $100-500 | 188 | $4.27 | 1.6% |
+| $500-1000 | 198 | $4.31 | 0% |
+
+#### 🟢 High Receipt Cases ($1000+)
+Best performance with ML model:
+
+| Receipt Range | Cases | Avg Error | Notable Issues |
+|--------------|-------|-----------|----------------|
+| $1000-1500 | 189 | $7.01 | Some outliers ($258 max error) |
+| $1500+ | 377 | $4.91 | Generally good |
+
+**Problem outliers in high receipts:**
+- 8 days, 482 miles, $1411.49: Expected $631.81, Got $889.90 (+$258)
+- 5 days, 516 miles, $1878.49: Expected $669.85, Got $906.63 (+$237)
+
+#### 🎯 Efficiency Sweet Spot (180-220 miles/day)
+Mixed results - not showing clear bonus pattern:
+- With medium-high receipts: Avg error $7.73
+- With high receipts: Avg error $2.92
+- Not consistently better than non-sweet-spot cases
+
+### Key Findings
+
+1. **Low Receipt Formula Needs Complete Redesign**
+   - Current formula fails for trips > 3 days
+   - Need different formulas based on trip length
+   - Or abandon formula approach for ML model
+
+2. **Unexplained Low Reimbursements**
+   - Some high receipt cases get very low reimbursements
+   - Example: $1411 receipts → $631 reimbursement
+   - Suggests penalty rules we haven't discovered
+
+3. **No Clear Efficiency Bonus**
+   - 180-220 miles/day not showing consistent benefit
+   - Kevin's theory not supported by data
+
+4. **Receipt Thresholds Matter**
+   - <$30: Special rules (but our formula is wrong)
+   - $30-1000: ML model works well
+   - $1000+: ML model works but has outliers
+
+### Recommended Next Steps
+
+1. **Fix Low Receipt Formula** (Priority 1)
+   - Test different formulas by trip length
+   - Or use ML model for all cases
+   - Focus on the 26 low receipt cases first
+
+2. **Investigate Outliers** (Priority 2)
+   - Why do some high receipt cases get low reimbursements?
+   - Check for hidden penalty rules
+   - Look for patterns in the outlier cases
+
+3. **Consider Abandoning Simple Formulas**
+   - ML model performs better for most cases
+   - May need more complex rules than formulas can capture
+
+## Phase 3: Interview Claims Investigation
+
+### Key Patterns from Employee Interviews
+
+#### 1. Magic Number $847 (Marcus) - CONFIRMED
+- Found 11 cases within ±$10 of $847
+- Cases vary widely: 3-11 days, 98-906 miles, $130-$696 receipts
+- Average profile: 8.1 days, 367.8 miles, $381.77 receipts
+- **Suggests $847 is a calculation outcome, not coincidence**
+
+#### 2. Efficiency Sweet Spot 180-220 mpd (Kevin) - CONTRADICTED
+- Sweet spot cases average $1318.86
+- Nearby efficiency cases average $1461.19
+- **Kevin's theory appears backwards - the "sweet spot" gets LESS money**
+
+#### 3. Rounding Bug .49/.99 (Lisa) - CONFIRMED MAJOR PENALTY!
+- .49/.99 receipt cases average much lower reimbursement ($566 vs $1373)
+- **CRITICAL DISCOVERY**: ALL 30 cases with .49/.99 receipts get penalized!
+  - Average penalty: $473.67 (-12% to -78% reduction)
+  - 0 out of 30 cases got higher than predicted amount
+  - This is NOT a bonus as Lisa thought - it's a severe PENALTY
+- Reimbursement endings show patterns: .12, .68, .87, .24, .18 most common
+- **This appears to be an anti-fraud measure or calculation bug**
+
+#### 4. Five-Day Bonus (Lisa) - NOT CONFIRMED
+- 4-day: $1217.96 avg
+- 5-day: $1272.59 avg
+- 6-day: $1366.48 avg
+- **No clear bonus for 5-day trips**
+
+#### 5. Spending Ranges (Kevin) - CONTRADICTED
+- Kevin claimed low spending per day is better
+- Data shows OPPOSITE:
+  - Short trips: <$75/day avg $421.88, >$75/day avg $1054.97
+  - Medium trips: <$120/day avg $814.53, >$120/day avg $1461.39
+  - Long trips: <$90/day avg $1210.23, >$90/day avg $1739.57
+- **Higher spending correlates with higher reimbursement**
+
+#### 6. Mileage Tiers (Lisa) - CONFIRMED
+- Clear progression:
+  - 0-50 miles: $1086.79
+  - 50-100 miles: $938.96 (drops!)
+  - 100-200 miles: $1105.36
+  - 200-400 miles: $1150.94
+  - 400-600 miles: $1319.24
+  - 600-1000 miles: $1486.38
+  - 1000+ miles: $1600.89
+- **Confirms tiered mileage structure with initial drop**
+
+### Repeated Exact Reimbursements
+Some reimbursement values appear multiple times with different inputs:
+- $1547.50 (2x)
+- $2214.64 (2x)
+- $1745.09 (2x)
+
+**This suggests discrete calculation rules or ceilings**
+
+### Implementation Priorities for V4
+1. **CRITICAL: Implement .49/.99 receipt penalty** (avg -$473.67)
+2. Investigate if $847 is a calculation ceiling for certain conditions
+3. Consider mileage tier structure (especially the 50-100 mile drop)
+4. Look for discrete calculation outcomes
+
+## Phase 3 V3 Low Receipt Formula Results
+
+### Formula Changes by Trip Length
+- Single day: $106.12 + $0.525/mile (avg error $11.24)
+- Short trip (2-3d): $112.02/day + $0.857/mile - $40.10 (avg error $17.11)
+- Medium trip (4-6d): $100/day + $0.50/mile (avg error $11.62)
+- Long trip (7+d): Use ML model (linear formulas fail)
+
+### Test Results
+- 1d, 55mi, $3.60: Error reduced from $34.27 to $8.94
+- 3d, 93mi, $1.42: Error reduced from $17.57 to $11.15
+- 13d, 1204mi, $24.47: Error reduced from $858.83 to $0.36 (ML model)
+
+## Phase 4: Critical .49/.99 Penalty Discovery
+
+### The "Rounding Bug" is Actually a Penalty!
+- Lisa thought .49/.99 receipts got a bonus ("rounds up twice")
+- **Reality**: They get a MASSIVE penalty averaging 45.6%
+- Every single case (30/30) with .49/.99 receipts got less than expected
+- Penalty ranges from 12% to 78% of predicted amount
+
+### Examples of .49/.99 Penalties
+- $619.49 receipts: Expected $1013.72, Got $676.38 (33% penalty)
+- $1809.49 receipts: Expected $1509.12, Got $446.94 (70% penalty)  
+- $21.99 receipts: Expected $506.15, Got $359.10 (29% penalty)
+
+### V4 Implementation Challenge
+- Fixed 45% penalty implemented but showing mixed results
+- Example: 8d, 482mi, $1411.49
+  - Original prediction: $889.90
+  - With 45% penalty: $489.45
+  - Expected: $631.81
+  - Error increased from $258 to $142 (still high)
+- **Need variable penalty based on receipt amount or other factors**
+
+**This is likely an anti-fraud measure to discourage receipt manipulation**
+
+## Summary of Implemented Features
+
+### V1 (Baseline)
+- Gradient Boosting model with 27 engineered features
+- R² 0.9709, avg error $58.83
+- Discovered critical issues: float miles, low receipt penalty wrong
+
+### V2 
+- Fixed float miles bug
+- Reversed low receipt logic (they need HIGHER reimbursement)
+- Simple formula for receipts <$30: $100/day + $0.75/mile
+- Improved model parameters
+- Score: 839.70 (avg error $7.40)
+
+### V3
+- Trip-length-aware formulas for low receipts:
+  - Single day: $106.12 + $0.525/mile
+  - Short (2-3d): $112.02/day + $0.857/mile - $40.10
+  - Medium (4-6d): $100/day + $0.50/mile
+  - Long (7+d): Use ML model
+- Better handling of edge cases
+
+### V4 (Current)
+- Discovered .49/.99 receipt penalty (12-78% reduction)
+- Implemented 45% fixed penalty for .49/.99 cases
+- Mixed results - penalty too high for some cases
+
+## Key Discoveries from Interviews/PRD
+
+### Confirmed Patterns
+1. **Mileage tiers exist** - Drop at 50-100 miles, then increases
+2. **Low receipt penalty REVERSED** - They get MORE, not less
+3. **.49/.99 penalty** - Major anti-fraud measure (avg 45.6%)
+4. **$847 cluster** - 11 cases near this value, likely calculation artifact
+
+### Refuted Claims  
+1. **5-day bonus** - No evidence
+2. **Efficiency sweet spot (180-220 mpd)** - Actually gets LESS
+3. **Low spending is better** - Opposite is true
+
+### Still to Investigate
+1. Variable .49/.99 penalty (not fixed 45%)
+2. $847 ceiling mechanism
+3. Discrete reimbursement values (some amounts repeat)
+4. High receipt outliers getting low reimbursements

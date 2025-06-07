@@ -1,0 +1,55 @@
+🧾 Parallel Black Box Challenge Evaluation
+==================================================
+
+Loading test cases...
+Loaded 1000 test cases
+Running with 16 CPUs...
+
+Progress: 100/1000 cases processed...
+Progress: 200/1000 cases processed...
+Progress: 300/1000 cases processed...
+Progress: 400/1000 cases processed...
+Progress: 500/1000 cases processed...
+Progress: 600/1000 cases processed...
+Progress: 700/1000 cases processed...
+Progress: 800/1000 cases processed...
+Progress: 900/1000 cases processed...
+Progress: 1000/1000 cases processed...
+
+Completed in 159.4 seconds!
+
+✅ Evaluation Complete!
+
+📈 Results Summary:
+  Total test cases: 1000
+  Successful runs: 1000
+  Exact matches (±$0.01): 6 (0.6%)
+  Close matches (±$1.00): 208 (20.8%)
+  Average error: $7.40
+  Maximum error: $858.83
+
+🎯 Your Score: 839.70 (lower is better)
+
+💡 Top 10 high-error cases:
+  Case 917: 13 days, 1204.00 miles, $24.47 receipts
+    Expected: $1344.17, Got: $2203.00, Error: $858.83
+  Case 522: 10 days, 1192.00 miles, $23.47 receipts
+    Expected: $1157.87, Got: $1894.00, Error: $736.13
+  Case 548: 8 days, 482.00 miles, $1411.49 receipts
+    Expected: $631.81, Got: $889.90, Error: $258.09
+  Case 711: 5 days, 516.00 miles, $1878.49 receipts
+    Expected: $669.85, Got: $906.63, Error: $236.78
+  Case 759: 1 days, 893.00 miles, $19.76 receipts
+    Expected: $570.71, Got: $769.75, Error: $199.04
+  Case 684: 8 days, 795.00 miles, $1645.99 receipts
+    Expected: $644.69, Got: $806.72, Error: $162.03
+  Case 708: 7 days, 803.00 miles, $12.75 receipts
+    Expected: $1146.78, Got: $1302.25, Error: $155.47
+  Case 115: 5 days, 195.73 miles, $1228.49 receipts
+    Expected: $511.23, Got: $656.50, Error: $145.27
+  Case 244: 4 days, 286.00 miles, $1063.49 receipts
+    Expected: $418.17, Got: $553.01, Error: $134.84
+  Case 926: 4 days, 477.00 miles, $18.97 receipts
+    Expected: $631.50, Got: $757.75, Error: $126.25
+
+📄 Detailed results saved to parallel_eval_results.json

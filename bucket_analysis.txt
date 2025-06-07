@@ -1,0 +1,217 @@
+# Error Analysis by Bucket
+
+Total cases: 1000
+Average error: $7.40
+Exact matches: 6 (0.6%)
+
+
+## Low Receipt - Long Trip (7+ days)
+- Cases: 3
+- Avg Error: $583.48
+- Max Error: $858.83
+- Exact Matches: 0 (0.0%)
+- Over-predicted: 100.0%
+
+Worst cases:
+  - 13d, 1204mi, $24.47 receipts
+    Expected: $1344.17, Got: $2203.00, Error: $858.83
+  - 10d, 1192mi, $23.47 receipts
+    Expected: $1157.87, Got: $1894.00, Error: $736.13
+  - 7d, 803mi, $12.75 receipts
+    Expected: $1146.78, Got: $1302.25, Error: $155.47
+
+## Low Receipt - Medium Trip (4-6 days)
+- Cases: 2
+- Avg Error: $100.12
+- Max Error: $126.25
+- Exact Matches: 0 (0.0%)
+- Over-predicted: 100.0%
+
+Worst cases:
+  - 4d, 477mi, $18.97 receipts
+    Expected: $631.50, Got: $757.75, Error: $126.25
+  - 4d, 231mi, $20.39 receipts
+    Expected: $499.26, Got: $573.25, Error: $73.99
+
+## Low Receipt - Single Day
+- Cases: 9
+- Avg Error: $34.27
+- Max Error: $199.04
+- Exact Matches: 0 (0.0%)
+- Over-predicted: 88.9%
+
+Worst cases:
+  - 1d, 893mi, $19.76 receipts
+    Expected: $570.71, Got: $769.75, Error: $199.04
+  - 1d, 58mi, $5.86 receipts
+    Expected: $117.24, Got: $143.50, Error: $26.26
+  - 1d, 59mi, $8.31 receipts
+    Expected: $120.65, Got: $144.25, Error: $23.60
+
+## Low Receipt - Short Trip (2-3 days)
+- Cases: 12
+- Avg Error: $17.57
+- Max Error: $73.32
+- Exact Matches: 0 (0.0%)
+- Over-predicted: 58.3%
+
+Worst cases:
+  - 3d, 121mi, $21.17 receipts
+    Expected: $464.07, Got: $390.75, Error: $73.32
+  - 2d, 89mi, $13.85 receipts
+    Expected: $234.20, Got: $266.75, Error: $32.55
+  - 3d, 117mi, $21.99 receipts
+    Expected: $359.10, Got: $387.75, Error: $28.65
+
+## Medium-High Receipt ($500-1000) [Efficiency Sweet Spot]
+- Cases: 10
+- Avg Error: $7.73
+- Max Error: $54.73
+- Exact Matches: 0 (0.0%)
+- Over-predicted: 20.0%
+
+Worst cases:
+  - 4d, 825mi, $874.99 receipts
+    Expected: $784.52, Got: $839.25, Error: $54.73
+  - 5d, 908mi, $716.70 receipts
+    Expected: $1375.88, Got: $1368.68, Error: $7.20
+  - 4d, 725mi, $588.90 receipts
+    Expected: $1097.95, Got: $1092.43, Error: $5.52
+
+## High Receipt ($1000-1500)
+- Cases: 185
+- Avg Error: $7.16
+- Max Error: $258.09
+- Exact Matches: 1 (0.5%)
+- Over-predicted: 50.8%
+
+Worst cases:
+  - 8d, 482mi, $1411.49 receipts
+    Expected: $631.81, Got: $889.90, Error: $258.09
+  - 5d, 196mi, $1228.49 receipts
+    Expected: $511.23, Got: $656.50, Error: $145.27
+  - 4d, 286mi, $1063.49 receipts
+    Expected: $418.17, Got: $553.01, Error: $134.84
+
+## Very High Receipt ($1500+)
+- Cases: 359
+- Avg Error: $5.03
+- Max Error: $236.78
+- Exact Matches: 2 (0.6%)
+- Over-predicted: 45.7%
+
+Worst cases:
+  - 5d, 516mi, $1878.49 receipts
+    Expected: $669.85, Got: $906.63, Error: $236.78
+  - 8d, 795mi, $1645.99 receipts
+    Expected: $644.69, Got: $806.72, Error: $162.03
+  - 1d, 1082mi, $1809.49 receipts
+    Expected: $446.94, Got: $523.96, Error: $77.02
+
+## Medium Receipt ($100-500) [Efficiency Sweet Spot]
+- Cases: 8
+- Avg Error: $4.63
+- Max Error: $23.38
+- Exact Matches: 0 (0.0%)
+- Over-predicted: 37.5%
+
+Worst cases:
+  - 2d, 384mi, $495.49 receipts
+    Expected: $290.36, Got: $313.74, Error: $23.38
+  - 5d, 966mi, $359.51 receipts
+    Expected: $927.98, Got: $931.52, Error: $3.54
+  - 5d, 1076mi, $190.33 receipts
+    Expected: $879.65, Got: $883.17, Error: $3.52
+
+## Medium Receipt ($100-500)
+- Cases: 180
+- Avg Error: $4.30
+- Max Error: $65.21
+- Exact Matches: 3 (1.7%)
+- Over-predicted: 49.4%
+
+Worst cases:
+  - 5d, 754mi, $489.99 receipts
+    Expected: $765.13, Got: $830.34, Error: $65.21
+  - 2d, 565mi, $389.49 receipts
+    Expected: $415.96, Got: $456.82, Error: $40.86
+  - 5d, 751mi, $407.43 receipts
+    Expected: $1063.46, Got: $1027.23, Error: $36.23
+
+## Medium-High Receipt ($500-1000)
+- Cases: 188
+- Avg Error: $4.05
+- Max Error: $55.67
+- Exact Matches: 0 (0.0%)
+- Over-predicted: 48.9%
+
+Worst cases:
+  - 4d, 650mi, $619.49 receipts
+    Expected: $676.38, Got: $732.05, Error: $55.67
+  - 5d, 210mi, $710.49 receipts
+    Expected: $483.34, Got: $533.99, Error: $50.65
+  - 1d, 451mi, $555.49 receipts
+    Expected: $162.18, Got: $209.48, Error: $47.30
+
+## Medium-Low Receipt ($30-100) [Efficiency Sweet Spot]
+- Cases: 1
+- Avg Error: $3.94
+- Max Error: $3.94
+- Exact Matches: 0 (0.0%)
+- Over-predicted: 100.0%
+
+## Medium-Low Receipt ($30-100)
+- Cases: 21
+- Avg Error: $3.64
+- Max Error: $40.36
+- Exact Matches: 0 (0.0%)
+- Over-predicted: 52.4%
+
+Worst cases:
+  - 11d, 1179mi, $31.36 receipts
+    Expected: $1550.55, Got: $1510.19, Error: $40.36
+  - 9d, 800mi, $39.96 receipts
+    Expected: $1158.68, Got: $1153.54, Error: $5.14
+  - 3d, 504mi, $63.39 receipts
+    Expected: $568.17, Got: $572.32, Error: $4.15
+
+## Very High Receipt ($1500+) [Efficiency Sweet Spot]
+- Cases: 18
+- Avg Error: $3.41
+- Max Error: $17.58
+- Exact Matches: 0 (0.0%)
+- Over-predicted: 55.6%
+
+Worst cases:
+  - 5d, 1010mi, $2054.21 receipts
+    Expected: $1810.37, Got: $1792.79, Error: $17.58
+  - 4d, 862mi, $2335.55 receipts
+    Expected: $1698.94, Got: $1693.03, Error: $5.91
+  - 4d, 810mi, $1852.31 receipts
+    Expected: $1575.87, Got: $1580.73, Error: $4.86
+
+## High Receipt ($1000-1500) [Efficiency Sweet Spot]
+- Cases: 4
+- Avg Error: $2.92
+- Max Error: $5.46
+- Exact Matches: 0 (0.0%)
+- Over-predicted: 50.0%
+
+
+# Key Patterns
+
+## Low Receipt Formula Performance (<$30)
+- Low Receipt - Long Trip (7+ days): Avg error $583.48
+- Low Receipt - Medium Trip (4-6 days): Avg error $100.12
+- Low Receipt - Single Day: Avg error $34.27
+- Low Receipt - Short Trip (2-3 days): Avg error $17.57
+- Medium-Low Receipt ($30-100) [Efficiency Sweet Spot]: Avg error $3.94
+- Medium-Low Receipt ($30-100): Avg error $3.64
+
+Conclusion: Our $100/day + $0.75/mile formula needs adjustment based on trip length!
+
+## Systematic Prediction Bias
+- Low Receipt - Long Trip (7+ days): Over-predicting 100% of the time
+- Low Receipt - Medium Trip (4-6 days): Over-predicting 100% of the time
+- Low Receipt - Single Day: Over-predicting 89% of the time
+- Medium-Low Receipt ($30-100) [Efficiency Sweet Spot]: Over-predicting 100% of the time
