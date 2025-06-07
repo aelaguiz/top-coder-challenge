@@ -122,3 +122,29 @@
 2. Create `run.sh` from template
 3. Run `eval.sh` and analyze the output
 4. Focus on the worst errors first - they likely reveal missing rules
+
+## Phase 1 Baseline Results (Eval.sh Findings)
+
+### Critical Discovery: Low Receipt Cases Use Different Formula!
+- **ALL high-error cases have receipts < $30**
+- Our low receipt penalty (60% reduction) is COMPLETELY WRONG
+- Low receipt cases are getting HIGHER reimbursements than predicted
+- Examples:
+  - days=3, miles=93, receipts=$1.42: Expected $364.51 (we predicted $221.44)
+  - days=1, miles=140, receipts=$22.71: Expected $199.68 (we predicted $115.57)
+
+### Pattern Analysis for Low Receipt Cases
+Testing formula: Base per day + rate per mile
+- Some cases suggest ~$100-125/day base + variable per mile rate
+- The per-mile rate varies significantly (not a simple constant)
+- Need to investigate if there are different regimes or rules
+
+### Technical Issues Found
+1. **Miles can be FLOAT values** - not just integers!
+   - Error: "invalid literal for int() with base 10: '344.46'"
+   - Need to fix: `miles = float(sys.argv[2])` not `int(sys.argv[2])`
+
+### High-Error Pattern Summary
+- Cases with receipts in $400-600 range also showing errors
+- Some cases are OVERpredicted (we predict too high)
+- Suggests multiple calculation regimes, not just low/high receipts
